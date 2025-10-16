@@ -51,6 +51,10 @@
   animation: slideDown 0.4s ease-out forwards;
 }
 
+.children-hide{
+  display: none;
+}
+
 @keyframes slideDown{
   from {
     transform: translateY(-10%);

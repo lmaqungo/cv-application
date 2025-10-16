@@ -3,12 +3,9 @@ import Company from "./Company";
 import StartDate from "./StartDate";
 import EndDate from "./EndDate";
 import Description from "./Description";
-import { v4 as uuid } from 'uuid' 
-
-import { useState, useEffect } from 'react';
 
 
-const WorkExperience = ( { setterFn, jobsArr }) => {
+const WorkExperience = ( { activeObjId, setJobContent }) => {
   
     const [position, setPosition] = useState("");
     const [company, setCompany] = useState("");
@@ -16,28 +13,17 @@ const WorkExperience = ( { setterFn, jobsArr }) => {
     const [endDate, setEndDate] = useState("");
     const [description, setDescription] = useState("");
 
-    const job = {
-          id: uuid(),
-          position: position, 
-          company: company, 
-          startDate: startDate, 
-          endDate: endDate, 
-          description: description,
-    };
+    
 
-    useEffect(() => {
-        setterFn(c=>{
-          const newArr = [...c]; 
-          // console.log(`length of jobs: ${newArr.length}`);
-          newArr[jobsArr.length] = job;
-          return newArr;
-        })
-    });
 
-    useEffect(()=>{
-      console.log(`position: ${position}`);
-    }, [position])
-            
+
+
+      const updateObj = () =>{
+        setJobContent(c=>[...c].map(jobObj => 
+          jobObj.id === activeObjId ? {...jobObj, child: { position, company, startDate, endDate, description}} : jobObj
+        ));
+      }
+
   return (
         <div class='input-menu'>
             <div className="input-menu-layer-shared">

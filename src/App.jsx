@@ -13,7 +13,7 @@ import PersonalWebsite from './components/inputs/PersonalWebsite';
 import Location from './components/inputs/Location';
 import ProfileSummary from './components/inputs/ProfileSummary';
 import AddItemButton from './components/AddItemButton';
-import WorkExperience from './components/inputs/WorkExperience';
+import InnerAccordionMenu from './components/InnerAccordionMenu';
 import { v4 as uuid } from 'uuid' ;
 
 
@@ -29,24 +29,24 @@ function App() {
   const [location, setLocation] = useState("");
   
   const [profileSummary, setProfileSummary] = useState("");
-
-  const [jobContent, setJobContent] = useState([]);
   
-  const [jobs, setJobs] = useState([{ id: uuid()}, { id: uuid()}, { id: uuid()} ]); 
+  const [jobs, setJobs] = useState([{ id: uuid(), deleteAction: deleteJob, type: 'inner', child: {}}]); 
   const jobsRef = useRef(jobs); 
   
 
   useEffect(() => {
     jobsRef.current = jobs; 
-    console.log(`length: ${jobs.length}`);
   }, [jobs]); 
 
+  useEffect(() =>{
+    jobs.forEach((job, index)=> console.log(`job ${index + 1} position: ${job.child.position}`));
+  }, [jobs])
 
   
   function addJob(){
     /* jobs array will just be an array of objects with an id generated from uuid. Then link the key(and possibly 'number') to id. */
     setJobs(c=> {
-      const newArr = [...c, {id: uuid()}
+      const newArr = [...c, {id: uuid(), deleteAction: deleteJob, type: 'inner', child: {}}
     ]; 
     return newArr
     })
@@ -66,26 +66,14 @@ function App() {
 
   function deleteJob(e){
     /* find index of object whose id is the same as e.target.closest('[data-number]').dataset.number) then remove it*/
-      const itemToDelete = jobsRef.current.findIndex((element) => element.props.number === e.target.closest('[data-number]').dataset.number);  
-      
-      console.log(`deleted item index: ${itemToDelete}`); 
-      jobsRef.current.splice(itemToDelete, 1); 
-      setJobs(jobsRef.current); 
+      const prevArr = [...jobsRef.current];
+      const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
+      // console.log(`index of item to delete: ${itemToDelete}`);
+      prevArr.splice(itemToDelete, 1);  
+      setJobs(prevArr);  
   }
 
-  function renderAccordions(){
-    const accordionArr = jobs.map(job=> {return(
-                  <Accordion title="Job Position, Company" type="inner" number={job.id} deleteAction={deleteJob} key={job.id}>
-                    <WorkExperience setterFn={setJobContent} jobsArr={jobsRef.current}/>
-                  </Accordion>
-                )}); 
-    console.log(accordionArr.forEach(job=> console.log(`job: ${job}, job is an Accordion?: ${job.type===Accordion}`)));
-    return accordionArr;
-  }
-
-  const testAccordions = renderAccordions(); 
-  // console.log(testAccordions.forEach(job=> console.log(`Job title: ${job.props.number}`)));
-
+  
 
   return ( 
     <div className='main'>
@@ -119,15 +107,7 @@ function App() {
         
         <Accordion title='Work Experience'>
           <div className='input-menu'>
-            <AccordionMenu type='dynamic'>
-              /* map the objects in the array to the accordions and Work Experience*/ 
-                {/* {jobs.map(job=> {return(
-                  <Accordion title="Job Position, Company" type="inner" number={job.id} deleteAction={deleteJob} key={job.id}>
-                    <WorkExperience setterFn={setJobContent} jobsArr={jobsRef.current}/>
-                  </Accordion>
-                )})} */}
-                {testAccordions}
-            </AccordionMenu>
+            <InnerAccordionMenu jobsArray={jobs} setJobContent={setJobs}/>
             <AddItemButton title="Add Work Experience" addJob={addJob}/>
           </div>
         </Accordion>
@@ -145,7 +125,7 @@ function App() {
         <p>{ location }</p>
         <p>{ profileSummary }</p>
         <h1>Work Experience</h1>
-        {jobContent.map(job => <RenderJob job={job} key={job.id}/>)}
+        {jobs.map(job => <RenderJob job={job.child} key={job.id}/>)}
       </DummyPDF>
 
     </div>

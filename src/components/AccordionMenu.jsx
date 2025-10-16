@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Accordion from './Accordion'
 import React from 'react';
 
-const AccordionMenu = ({ children, type='' }) => {
+const AccordionMenu = ({ children }) => {
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -15,21 +15,12 @@ const AccordionMenu = ({ children, type='' }) => {
     <div className={"container"}>
         {React.Children.map(children, (accordion, index) => {
           if(accordion.type === Accordion){
-            if(type==='dynamic'){
               return (
-            <Accordion id={index} title={accordion.props.title} isActive = {activeAccordion === index} onShow = {handleClick} type={accordion.props.type} number={accordion.props.number} deleteAction={accordion.props.deleteAction} key={accordion.props.number}>
+            <Accordion id={index} title={accordion.props.title} isActive = {activeAccordion === index} onShow = {handleClick} type={accordion.props.type} number={accordion.props.number} deleteAction={accordion.props.deleteAction} accordionIdSetter={null}>
               {accordion.props.children}
             </Accordion>
               )
             }else{
-              return (
-            <Accordion id={index} title={accordion.props.title} isActive = {activeAccordion === index} onShow = {handleClick} type={accordion.props.type} number={accordion.props.number} deleteAction={accordion.props.deleteAction}>
-              {accordion.props.children}
-            </Accordion>
-              )
-            }
-          } 
-          else{
             console.log(`Invalid child type. Expecting: Accordion. \nProvided child type is: ${accordion.type}`);
           }
 
