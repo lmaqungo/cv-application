@@ -1,6 +1,6 @@
 import InputField from "../InputField"
 
-const Phone = ( { setter }) => {
+const Phone = ({ setter, value }) => {
     
     function handleInput(e){
         setter(e.target.value)
@@ -8,7 +8,7 @@ const Phone = ( { setter }) => {
 
     return (
         <div>
-            <InputField label="Phone" readContent={handleInput}/>
+            <InputField label="Phone" readContent={handleInput} value={value}/>
         </div>
     )
 }

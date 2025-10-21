@@ -1,6 +1,6 @@
 import InputField from "../InputField"
 
-const Position = ( { setter, value } ) => {
+const Position = ({ setter, value }) => {
   function handleInput(e){
         setter(e.target.value);
     }

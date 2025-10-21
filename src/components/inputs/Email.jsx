@@ -1,6 +1,6 @@
 import InputField from "../InputField"
 
-const Email = ( { setter }) => {
+const Email = ({ setter, value }) => {
     
     function handleInput(e){
         setter(e.target.value)
@@ -8,7 +8,7 @@ const Email = ( { setter }) => {
 
     return (
         <div>
-            <InputField label="Email" readContent={handleInput}/>
+            <InputField label="Email" readContent={handleInput} value={value}/>
         </div>
     )
 }

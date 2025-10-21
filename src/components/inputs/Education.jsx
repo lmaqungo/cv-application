@@ -1,17 +1,16 @@
-import Position from "./Position";
-import Company from "./Company";
 import StartDate from "./StartDate";
 import EndDate from "./EndDate";
 import Description from "./Description";
+import School from "./School";
+import Course from "./Course";
 
-
-const WorkExperience = ( { activeObjId, setJobContent, jobsArray }) => {
+const Education = ( { activeObjId, setEducationContent ,educationArray }) => {
   
-      const currentJob = jobsArray.find(job=> job.id===activeObjId); 
-      const currentChild = currentJob?.child || {}; 
+      const currentEdu = educationArray.find(edu=> edu.id===activeObjId); 
+      const currentChild = currentEdu?.child || {};
 
       const handleChange = (field, value) => {
-          setJobContent(prevArray => 
+          setEducationContent(prevArray => 
             prevArray.map(job => 
               job.id === activeObjId 
                 ? { 
@@ -24,18 +23,18 @@ const WorkExperience = ( { activeObjId, setJobContent, jobsArray }) => {
                 : job
             )
           );
-      };
+        };
 
   return (
         <div class='input-menu'>
             <div className="input-menu-layer-shared">
-                <Position 
-                value={currentChild.position || ""}
-                setter={(value) => handleChange('position', value)}
+                <School 
+                value={currentChild.school || ""}
+                setter={(value) => handleChange('school', value)}
                 />
-                <Company 
-                value={currentChild.company || ""}
-                setter={(value) => handleChange('company', value)}
+                <Course
+                value={currentChild.course || ""}
+                setter={(value) => handleChange('course', value)}
                 />
             </div>
             <div className="input-menu-layer-shared">
@@ -56,4 +55,4 @@ const WorkExperience = ( { activeObjId, setJobContent, jobsArray }) => {
   )
 }
 
-export default WorkExperience
+export default Education

@@ -1,6 +1,6 @@
 import InputField from "../InputField";
 
-const StartDate = ( {setter}) => {
+const StartDate = ({ setter, value }) => {
 
   function handleInput(e){
         setter(e.target.value)
@@ -8,7 +8,7 @@ const StartDate = ( {setter}) => {
     
     return (
         <div>
-            <InputField label="Start Date" readContent={handleInput}/>
+            <InputField label="Start Date" readContent={handleInput} value={value}/>
         </div>
     )
 }

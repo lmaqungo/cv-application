@@ -1,6 +1,6 @@
 import InputField from "../InputField"
 
-const Location = ({ setter }) => {
+const Location = ({ setter, value }) => {
 
     function handleInput(e){
         setter(e.target.value)
@@ -8,7 +8,7 @@ const Location = ({ setter }) => {
 
     return (
         <div>
-            <InputField label="Location" readContent={handleInput}/>
+            <InputField label="Location" readContent={handleInput} value={value}/>
         </div>
     )
 }

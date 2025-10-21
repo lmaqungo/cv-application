@@ -1,13 +1,13 @@
 import InputField from "../InputField"
 
-const Github = ({ setter }) => {
+const Github = ({ setter, value }) => {
   function handleInput(e){
         setter(e.target.value)
 }
 
     return (
         <div>
-            <InputField label="Github" readContent={handleInput}/>
+            <InputField label="Github" readContent={handleInput} value={value}/>
         </div>
     )
 }

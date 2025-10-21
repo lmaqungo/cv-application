@@ -1,6 +1,6 @@
 import TextArea from "../TextArea"
 
-const ProfileSummary = ({ setter }) => {
+const ProfileSummary = ({ setter, value }) => {
   function handleInput(e){
         setter(e.target.value)
     }
@@ -9,7 +9,7 @@ const ProfileSummary = ({ setter }) => {
 
     return (
         <div>
-            <TextArea label={label} readContent={handleInput} rows= "7"/>
+            <TextArea label={label} readContent={handleInput} rows= "7" value={value}/>
         </div>
     )
 }

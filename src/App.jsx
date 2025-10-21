@@ -14,6 +14,7 @@ import Location from './components/inputs/Location';
 import ProfileSummary from './components/inputs/ProfileSummary';
 import AddItemButton from './components/AddItemButton';
 import InnerAccordionMenu from './components/InnerAccordionMenu';
+import SkillMenu from './components/SkillMenu';
 import { v4 as uuid } from 'uuid' ;
 
 
@@ -31,16 +32,37 @@ function App() {
   const [profileSummary, setProfileSummary] = useState("");
   
   const [jobs, setJobs] = useState([{ id: uuid(), deleteAction: deleteJob, type: 'inner', child: {}}]); 
+
+  const [education, setEducation] = useState([{ id: uuid(), deleteAction: deleteEducation, type: 'inner', child: {}}]); 
+
+  const [skills, setSkills] = useState([{ id: uuid(), deleteAction: deleteSkill, content: ''}]);
+
   const jobsRef = useRef(jobs); 
+  const educationRef = useRef(education); 
+  const skillsRef = useRef(skills); 
   
 
   useEffect(() => {
     jobsRef.current = jobs; 
   }, [jobs]); 
 
+  useEffect(() => {
+    educationRef.current = education; 
+  }, [education]); 
+
+  useEffect(() => {
+    skillsRef.current = skills; 
+  }, [skills]); 
+
   useEffect(() =>{
     jobs.forEach((job, index)=> console.log(`job ${index + 1} position: ${job.child.position}`));
   }, [jobs])
+
+  useEffect(
+    () =>{
+      skills.forEach((skill, index)=>console.log(`skill ${index+1}: ${skill.content}`));
+    }, [skills]
+  )
 
   
   function addJob(){
@@ -48,9 +70,54 @@ function App() {
     setJobs(c=> {
       const newArr = [...c, {id: uuid(), deleteAction: deleteJob, type: 'inner', child: {}}
     ]; 
-    return newArr
+    return newArr;
     })
+  };
+
+  function addEducation(){
+    setEducation(c=>{
+      const newArr = [...c, {id: uuid(), deleteAction: deleteEducation, type: 'inner', child: {}}
+    ]; 
+    return newArr;
+    })
+  };
+
+  function addSkill(){
+    setSkills(c=>{
+      const newArr = [...c, { id: uuid(), deleteAction: deleteSkill, content: ''}
+
+      ]; 
+      return newArr;
+    }
+
+    )
   }
+  
+  function deleteJob(e){
+    /* find index of object whose id is the same as e.target.closest('[data-number]').dataset.number) then remove it*/
+    const prevArr = [...jobsRef.current];
+    const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
+    // console.log(`index of item to delete: ${itemToDelete}`);
+    prevArr.splice(itemToDelete, 1);  
+    setJobs(prevArr);  
+  }
+  
+  function deleteEducation(e){
+    /* find index of object whose id is the same as e.target.closest('[data-number]').dataset.number) then remove it*/
+    const prevArr = [...educationRef.current];
+    const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
+    // console.log(`index of item to delete: ${itemToDelete}`);
+    prevArr.splice(itemToDelete, 1);  
+    setEducation(prevArr);  
+  }
+
+  function deleteSkill(e){
+    const prevArr = [...skillsRef.current]; 
+    const itemToDelete= prevArr.findIndex(element=> element.id === e.target.closest('[data-id]').dataset.id); 
+    prevArr.splice(itemToDelete, 1); 
+    setSkills(prevArr);
+  }
+
   
   function RenderJob({ job }){
     return(
@@ -64,15 +131,35 @@ function App() {
   )
   }
 
-  function deleteJob(e){
-    /* find index of object whose id is the same as e.target.closest('[data-number]').dataset.number) then remove it*/
-      const prevArr = [...jobsRef.current];
-      const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
-      // console.log(`index of item to delete: ${itemToDelete}`);
-      prevArr.splice(itemToDelete, 1);  
-      setJobs(prevArr);  
+  function RenderSkills(){
+    return(
+      <div>
+        <ul>
+          {
+            skills.map(
+              skill=>{
+                return(
+                  <li>{skill.content}</li>
+                )
+              }
+            )
+          }
+        </ul>
+      </div>
+    )
   }
 
+  function RenderEducation({ edu }){
+    return(
+      <div>
+        <p>{edu.school}</p>
+        <p>{edu.course}</p>
+        <p>{edu.startDate}</p>
+        <p>{edu.endDate}</p>
+        <p>{edu.description}</p>
+      </div>
+  )
+  }
   
 
   return ( 
@@ -84,31 +171,51 @@ function App() {
           <div className="input-menu">
             <div className="input-menu-layer-shared">
                 <FirstName setter={setFirstName} value={firstName}/>
-                <LastName setter={setLastName}/>
+                <LastName setter={setLastName} value={lastName}/>
             </div>
             <JobTitle setter={setJobTitle}/>
             <div className="input-menu-layer-shared">
-                <Phone setter={setPhoneNumber}/>
-                <Email setter={setEmailAddress}/>
+                <Phone setter={setPhoneNumber} value={phoneNumber}/>
+                <Email setter={setEmailAddress} value={emailAddress}/>
             </div>
             <div className="input-menu-layer-shared">
-                <Github setter={setGithub}/>
-                <PersonalWebsite setter={setPersonalWebsite}/>
+                <Github setter={setGithub} value={github}/>
+                <PersonalWebsite setter={setPersonalWebsite} value={personalWebsite}/>
             </div>
-            <Location setter={setLocation}/>
+            <Location setter={setLocation} value={location}/>
           </div>
         </Accordion>
 
         <Accordion title='Profile Summary'>
           <div className='input-menu'>
-            <ProfileSummary setter={setProfileSummary}/>
+            <ProfileSummary setter={setProfileSummary} value={profileSummary}/>
           </div>
         </Accordion>
         
         <Accordion title='Work Experience'>
           <div className='input-menu'>
-            <InnerAccordionMenu jobsArray={jobs} setJobContent={setJobs}/>
-            <AddItemButton title="Add Work Experience" addJob={addJob}/>
+            <InnerAccordionMenu objArray={jobs} setObjContent={setJobs} type='work'/>
+            <AddItemButton title="Add Work Experience" addAction={addJob}/>
+          </div>
+        </Accordion>
+
+        <Accordion title='Education'>
+          <div className='input-menu'>
+            <InnerAccordionMenu objArray={education} setObjContent={setEducation} type='education'/>
+            <AddItemButton title="Add Education" addAction={addEducation}/>
+          </div>
+        </Accordion>
+
+        <Accordion title='Skills'>
+          <div className='input-menu'>
+            <SkillMenu skillArray={skills} setSkillContent={setSkills}/>
+            <AddItemButton title="Add Skill" addAction={addSkill}/>
+          </div>
+        </Accordion>
+
+        <Accordion title='More'>
+          <div className='input-menu'>
+            <AddItemButton title="Add Section" addAction={null}/>
           </div>
         </Accordion>
         
@@ -126,6 +233,10 @@ function App() {
         <p>{ profileSummary }</p>
         <h1>Work Experience</h1>
         {jobs.map(job => <RenderJob job={job.child} key={job.id}/>)}
+        <h1>Education</h1>
+        {education.map(edu => <RenderEducation edu={edu.child} key={edu.id}/>)}
+        <h1>Skills</h1>
+        {RenderSkills()}
       </DummyPDF>
 
     </div>

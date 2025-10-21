@@ -1,4 +1,10 @@
 
+:root {
+  --primary-color: #cccccc;
+  --secondary-color: #f2f2f2; 
+}
+
+
 .accordion-upper{
   display: flex;
   justify-content: space-between;
@@ -16,18 +22,19 @@
 }
 
 .accordion-upper:hover{
-  background-color: rgb(243, 141, 8);
+  background-color: var(--primary-color);
 }
 
 .accordion-upper-visited{
-  background-color: rgb(243, 141, 8);
+  background-color:var(--primary-color);
 }
 
 .accordion{
-  background-color: bisque;
+  background-color: white;
   border-radius: 6px;
   width: 560px;
   padding: 4px;
+  border: 2px solid var(--primary-color);
   /* box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
 }
 
@@ -35,7 +42,7 @@
   background-color: transparent;
   border-radius: 6px;
   padding: 4px;
-  border: 2px solid rgb(243, 141, 8);
+  border: 2px solid var(--primary-color);
 }
 
 .flip-dropdown-down{
@@ -93,6 +100,10 @@
   gap: 4px;
 }
 
+.no-label-input{
+  width: 100%;
+}
+
 .input-menu{
   padding: 12px 20px;
   display: flex;
@@ -140,4 +151,22 @@
 
 .delete-btn:hover{
   transform: scale(1.2);
+}
+
+.skill{
+  background-color: transparent;
+  border-radius: 6px;
+  padding: 4px;
+  border: 2px solid var(--primary-color);
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.skill input{
+  width: 100%;
+}
+
+input, textarea{
+  background-color: var(--secondary-color);
 }
