@@ -16,9 +16,61 @@ import AddItemButton from './components/AddItemButton';
 import InnerAccordionMenu from './components/InnerAccordionMenu';
 import SkillMenu from './components/SkillMenu';
 import { v4 as uuid } from 'uuid' ;
+import Tool from './components/Tool';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { useReactToPrint } from 'react-to-print';
+import { generateDefaultValues } from './default';
+
 
 
 function App() {
+
+  const templateJob = (position='', company='', startDate='', endDate='', description='') => {
+    return{
+      id: uuid(), 
+      deleteAction: deleteJob, 
+      child: {
+        position: position,
+        company: company,
+        startDate: startDate,
+        endDate: endDate,
+        description: description
+      }
+    }
+  };
+
+  const templateEducation = (school='', course='', startDate='', endDate='', description='') => {
+    return{
+      id: uuid(), 
+      deleteAction: deleteEducation, 
+      child: {
+        school: school, 
+        course: course, 
+        startDate: startDate, 
+        endDate: endDate, 
+        description: description
+      }
+    }
+  };
+
+  const templateSkill = (content='') => {
+    return{
+      id: uuid(), 
+      deleteAction: deleteSkill, 
+      content: content
+    }
+  };
+
+  const templateSection = (sectionName='') => {
+    return{
+      id: uuid(), 
+      sectionName: sectionName, 
+      deleteAction: deleteSection, 
+      sectionItems: [],
+      linkItems: []
+    }
+  };
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -31,16 +83,53 @@ function App() {
   
   const [profileSummary, setProfileSummary] = useState("");
   
-  const [jobs, setJobs] = useState([{ id: uuid(), deleteAction: deleteJob, type: 'inner', child: {}}]); 
+  const [jobs, setJobs] = useState([templateJob()]); 
 
-  const [education, setEducation] = useState([{ id: uuid(), deleteAction: deleteEducation, type: 'inner', child: {}}]); 
+  const [education, setEducation] = useState([templateEducation()]); 
 
-  const [skills, setSkills] = useState([{ id: uuid(), deleteAction: deleteSkill, content: ''}]);
+  const [skills, setSkills] = useState([]);
+
+  const [sections, setSections] = useState([]);
 
   const jobsRef = useRef(jobs); 
   const educationRef = useRef(education); 
   const skillsRef = useRef(skills); 
+  const sectionsRef = useRef(sections);
+
   
+  const contentRef = useRef(null);
+  const reactToPrintContent = () => {
+    return contentRef.current;
+  }
+
+  const handlePrint = useReactToPrint({
+    documentTitle: 'untitled cv', 
+    openWindow: true,
+    pageStyle: `
+    @page { margin: 0; }
+    @media print {
+      html, body {
+        width: 210mm !important;
+        height: 297mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #page {
+        width: 210mm !important;
+        height: 297mm !important;
+        padding: 32px !important;
+        box-sizing: border-box !important;
+        font-size: 16px !important;
+        transform: scale(1) !important;
+        transform-origin: top left;
+      }
+      * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      }
+    }
+  `,
+  });
 
   useEffect(() => {
     jobsRef.current = jobs; 
@@ -54,6 +143,10 @@ function App() {
     skillsRef.current = skills; 
   }, [skills]); 
 
+  useEffect(() => {
+    sectionsRef.current = sections; 
+  }, [sections]); 
+
   useEffect(() =>{
     jobs.forEach((job, index)=> console.log(`job ${index + 1} position: ${job.child.position}`));
   }, [jobs])
@@ -64,11 +157,35 @@ function App() {
     }, [skills]
   )
 
+  // useEffect(() =>
+  //   sections.forEach(section=>{
+  //     console.log(`section name: ${section.sectionName}\nsection items count: ${section.content.length}`);
+  //     section.content.forEach(sectionItem =>
+  //       console.log(`section item: ${sectionItem.content}`)
+  //     )
+  //   }
+
+  //   )
+  // , [sections]);
+  
+  // useEffect(() =>
+  //   sections.forEach(section=>{
+  //     console.log(`section name: ${section.sectionName}`);
+  //     section.linkItems.forEach(linkItem =>{
+  //        console.log(`link item: ${linkItem.linkContent}`);
+  //        console.log(`link link: ${linkItem.href}`);
+  //     }
+       
+  //     )
+  //   }
+
+  //   )
+  // , [sections]);
+
   
   function addJob(){
-    /* jobs array will just be an array of objects with an id generated from uuid. Then link the key(and possibly 'number') to id. */
     setJobs(c=> {
-      const newArr = [...c, {id: uuid(), deleteAction: deleteJob, type: 'inner', child: {}}
+      const newArr = [...c, templateJob()
     ]; 
     return newArr;
     })
@@ -76,7 +193,7 @@ function App() {
 
   function addEducation(){
     setEducation(c=>{
-      const newArr = [...c, {id: uuid(), deleteAction: deleteEducation, type: 'inner', child: {}}
+      const newArr = [...c, templateEducation()
     ]; 
     return newArr;
     })
@@ -84,29 +201,32 @@ function App() {
 
   function addSkill(){
     setSkills(c=>{
-      const newArr = [...c, { id: uuid(), deleteAction: deleteSkill, content: ''}
-
+      const newArr = [...c, templateSkill()
       ]; 
       return newArr;
     }
 
     )
   }
+
+  function addSection(){
+    setSections(c=>{
+      const newArr = [...c, templateSection()
+    ]; 
+    return newArr;
+    })
+  }
   
   function deleteJob(e){
-    /* find index of object whose id is the same as e.target.closest('[data-number]').dataset.number) then remove it*/
     const prevArr = [...jobsRef.current];
     const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
-    // console.log(`index of item to delete: ${itemToDelete}`);
     prevArr.splice(itemToDelete, 1);  
     setJobs(prevArr);  
   }
   
   function deleteEducation(e){
-    /* find index of object whose id is the same as e.target.closest('[data-number]').dataset.number) then remove it*/
     const prevArr = [...educationRef.current];
     const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
-    // console.log(`index of item to delete: ${itemToDelete}`);
     prevArr.splice(itemToDelete, 1);  
     setEducation(prevArr);  
   }
@@ -118,47 +238,164 @@ function App() {
     setSkills(prevArr);
   }
 
+  function deleteSection(e){
+    const prevArr = [...sectionsRef.current]; 
+    const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
+    prevArr.splice(itemToDelete, 1);  
+    setSections(prevArr);  
+  }
+
   
   function RenderJob({ job }){
     return(
-      <div>
+      <div className='section-gap'>
+        <div className="upper-content">
+          <p className='bold'>{job.company}</p>
+          <p>{`${job.startDate}-${job.endDate}`}</p>
+        </div>
         <p>{job.position}</p>
-        <p>{job.company}</p>
-        <p>{job.startDate}</p>
-        <p>{job.endDate}</p>
-        <p>{job.description}</p>
+        <ul>
+          {job.description.split('\n').map(point=>{
+            return(
+              <li>{point}</li>
+            )
+          }
+          )}
+        </ul>
       </div>
   )
   }
 
   function RenderSkills(){
     return(
-      <div>
-        <ul>
-          {
-            skills.map(
-              skill=>{
-                return(
-                  <li>{skill.content}</li>
-                )
-              }
-            )
-          }
-        </ul>
+      <div className='section'>
+        <h1 className="header">Skills</h1>
+        <div className="body">
+          <ul>
+            {
+              skills.map(
+                skill=>{
+                  return(
+                    <li>{skill.content}</li>
+                  )
+                }
+              )
+            }
+          </ul>
+        </div>
       </div>
     )
   }
 
   function RenderEducation({ edu }){
     return(
-      <div>
-        <p>{edu.school}</p>
+      <div className='section-gap'>
+        <div className="upper-content">
+          <p className='bold' >{edu.school}</p>
+          <p>{`${edu.startDate}-${edu.endDate}`}</p>
+        </div>
         <p>{edu.course}</p>
-        <p>{edu.startDate}</p>
-        <p>{edu.endDate}</p>
-        <p>{edu.description}</p>
+        <ul>
+          {edu.description.split('\n').map(point=>{
+            return(
+              <li>{point}</li>
+            )
+          }
+          )}
+        </ul>
       </div>
   )
+  }
+
+  function RenderSection({ section, addRule }){
+    return(
+      <>
+      <div className='section'>
+        <h1 className='header'>{section.sectionName}</h1>
+        <div className="body">
+          <ul>
+            {section.sectionItems && 
+              section.sectionItems.map(
+                sectionItem=>{
+                  return(
+                    <li key={sectionItem.id}>{sectionItem.content}</li>
+                  )
+                }
+              )
+            }
+          </ul>
+        </div>
+      </div>
+      {addRule && <hr className='dotted-line'/>}
+      </>
+    )
+  }
+
+  const setDefaults = () => {
+
+    const defaultValues = generateDefaultValues();
+
+    setFirstName(defaultValues.firstName);
+    setLastName(defaultValues.lastName);
+    setJobTitle(defaultValues.jobTitle);
+    setPhoneNumber(defaultValues.phoneNumber);
+    setEmailAddress(defaultValues.emailAddress);
+    setGithub(defaultValues.github);
+    setPersonalWebsite(defaultValues.personalWebsite);
+    setLocation(defaultValues.location);
+    setProfileSummary(defaultValues.profileSummary);
+    setJobs(
+      [
+        templateJob(
+          defaultValues.job1.position,
+          defaultValues.job1.company,
+          defaultValues.job1.startDate,
+          defaultValues.job1.endDate,
+          defaultValues.job1.description,
+        )
+      ]
+    )
+    /* 
+    setSections(
+      [
+      templateSection(
+      defaultValues.section1.sectionName, [
+      templateSectionItem(defaultValues.section1.sectionItems[0])
+      ]
+      )
+      ]
+    )
+    
+    */
+
+  }
+
+
+  const downloadPDF = ()=> {
+    console.log('download button clicked');
+    const cv = document.querySelector('#page'); 
+    html2canvas(cv).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4", true);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+        const imgX = (pdfWidth - imgWidth * ratio) / 2;
+        const imgY = (pdfHeight - imgHeight * ratio) / 2;
+        pdf.addImage(
+          imgData, 
+          'PNG', 
+          imgX, 
+          imgY, 
+          imgWidth * ratio, 
+          imgHeight * ratio
+        ); 
+        pdf.save("Untitled-cv.pdf");
+    }
+    ); 
+    console.log('download process complete')
   }
   
 
@@ -173,7 +410,7 @@ function App() {
                 <FirstName setter={setFirstName} value={firstName}/>
                 <LastName setter={setLastName} value={lastName}/>
             </div>
-            <JobTitle setter={setJobTitle}/>
+            <JobTitle setter={setJobTitle} value={jobTitle}/>
             <div className="input-menu-layer-shared">
                 <Phone setter={setPhoneNumber} value={phoneNumber}/>
                 <Email setter={setEmailAddress} value={emailAddress}/>
@@ -215,32 +452,78 @@ function App() {
 
         <Accordion title='More'>
           <div className='input-menu'>
-            <AddItemButton title="Add Section" addAction={null}/>
+            <InnerAccordionMenu objArray={sections} setObjContent={setSections} type='sections'/>
+            <AddItemButton title="Add Section" addAction={addSection}/>
           </div>
         </Accordion>
         
 
       </AccordionMenu>
-      <DummyPDF>
-        <p>{ firstName }</p>
-        <p>{ lastName }</p>
-        <p>{ jobTitle }</p>
-        <p>{ phoneNumber }</p>
-        <p>{ emailAddress }</p>
-        <p>{ github }</p>
-        <p>{ personalWebsite }</p>
-        <p>{ location }</p>
-        <p>{ profileSummary }</p>
-        <h1>Work Experience</h1>
-        {jobs.map(job => <RenderJob job={job.child} key={job.id}/>)}
-        <h1>Education</h1>
-        {education.map(edu => <RenderEducation edu={edu.child} key={edu.id}/>)}
-        <h1>Skills</h1>
-        {RenderSkills()}
+      <DummyPDF ref={contentRef}>
+        <div className="cv-header">
+          <h1 id='name'>{`${firstName} ${lastName}`}</h1> 
+          <h1 className='header'>{ jobTitle }</h1>
+        </div>
+        <div className="cv-main">
+
+          <div className="left">
+            <div className="section">
+              {profileSummary && <h1 className='header'>Profile</h1>}
+              <div className="body">
+                <p>{ profileSummary }</p>
+              </div>
+            </div>
+            {jobs.length> 0 && <hr className='dotted-line'/>}
+            <div className="section">
+              {jobs.length> 0 && <h1 className="header">Work Experience</h1>}
+              <div className="body">
+                { jobs.map(job => <RenderJob job={job.child} key={job.id}/>) }
+              </div>
+            </div>
+            {education.length > 0 && <hr className="dotted-line"/>}
+            <div className="section">
+              {education.length>0 && <h1 className="header">Education</h1>}
+              <div className="body">
+                { education.map(edu => <RenderEducation edu={edu.child} key={edu.id}/>) }
+              </div>
+            </div>
+          </div>
+
+          <div className="right">
+            <div className="section">
+              { (phoneNumber || emailAddress || personalWebsite || github || location) && <h1 className='header'>Contact</h1>}
+              <div className='body'>
+                <p>{ phoneNumber }</p>
+                <p>{ emailAddress }</p>
+                <p>{ personalWebsite }</p>
+                <p>{ github }</p>
+                <p>{ location }</p>
+              </div>
+            </div>
+            { (sections.length > 0 || skills.length > 0) && <hr className='dotted-line'/>}
+            {skills.length>0 && RenderSkills()}
+            {sections.length > 0 && <hr className='dotted-line'/>}
+            { sections.map((section, index)=> <RenderSection section={section} key={section.id} addRule={index!==sections.length-1}/>)}
+          </div>
+        </div>
       </DummyPDF>
+      <div className="toolbar">
+        <Tool type='delete'/>
+        <Tool type='refresh' buttonAction={setDefaults}/>
+        <Tool type='print' buttonAction={() => handlePrint(reactToPrintContent)}/>
+      </div>
 
     </div>
   )
 }
 
 export default App
+
+/* 
+TO DO: 
+Add all default input
+Think about all default inputs. Might be better to put it all inside a function component that returns an object so that I just need to change the inputs there.   
+Increase font size for print
+Create delete input function
+Create restart input function
+*/

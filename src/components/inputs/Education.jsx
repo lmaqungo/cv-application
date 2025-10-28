@@ -3,11 +3,12 @@ import EndDate from "./EndDate";
 import Description from "./Description";
 import School from "./School";
 import Course from "./Course";
+import { useEffect } from "react";
 
 const Education = ( { activeObjId, setEducationContent ,educationArray }) => {
-  
+
       const currentEdu = educationArray.find(edu=> edu.id===activeObjId); 
-      const currentChild = currentEdu?.child || {};
+      const currentChild = currentEdu?.child || {}; 
 
       const handleChange = (field, value) => {
           setEducationContent(prevArray => 

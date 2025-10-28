@@ -1,7 +1,6 @@
 import { DropDownArrow, DeleteIcon } from '../icons';
-import { useEffect } from 'react';
 
-const Accordion = ({ children, title, onShow=null, isActive=null, id, type=null, number=null, deleteAction=null ,accordionIdSetter=null}) => {
+const Accordion = ({ children, title, onShow=null, isActive=null, id, type=null, number=null, deleteAction ,accordionIdSetter=null}) => {
 
 
   // use the isActive bool to set active id to the number prop 

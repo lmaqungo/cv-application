@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState } from 'react'
 import SkillInput from './SkillInput'
 
 const SkillMenu = ({ skillArray, setSkillContent }) => {
@@ -9,7 +8,7 @@ const SkillMenu = ({ skillArray, setSkillContent }) => {
         {
             skillArray.map( skill=>{
                 return(
-                    <SkillInput id={skill.id} deleteAction={skill.deleteAction} key={skill.id} setSkillContent={setSkillContent}/>
+                    <SkillInput id={skill.id} deleteAction={skill.deleteAction} key={skill.id} setSkillContent={setSkillContent} />
                 )
             }
             )

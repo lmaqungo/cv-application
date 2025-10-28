@@ -1,8 +1,8 @@
+import '../print.css'
 
-
-const DummyPDF = ({ children }) => {
+const DummyPDF = ({ children, ref }) => {
   return (
-    <div id="page">
+    <div id="page" ref={ref}>
         { children }
     </div>
   )

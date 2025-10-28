@@ -1,0 +1,117 @@
+
+
+#page{
+  width: 595px;
+  height: 842px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@page{
+  margin: 0;
+}
+
+.cv-header{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cv-main{
+  display: flex;
+  padding: 0;
+  gap: 8px;
+  height: 100%;
+}
+
+.left{
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+}
+
+.dotted-line{
+  border-top: 1px dashed black;
+}
+
+#name{
+  text-transform: uppercase;
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+
+.right{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: #F0E4D3;
+  border-radius: 6px;
+  height: 100%;
+}
+
+.section{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header{
+  letter-spacing: 1px;
+  font-size: 14px;
+  /* color: var(--primary-color); */
+  text-transform: uppercase;
+}
+
+.section *{
+  font-size: 12px;
+}
+
+.section ul{
+  padding-left: 24px;
+}
+
+.body{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-gap{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+
+@media print{
+  html, body{
+    width: 210mm; 
+    height: 297mm; 
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #page{
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 32px !important;  
+    box-sizing: border-box !important;
+    transform: scale(1) !important;
+    transform-origin: top left;
+    page-break-after: always;
+    font-size: 16px !important; 
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

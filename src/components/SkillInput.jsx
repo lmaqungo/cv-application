@@ -3,7 +3,7 @@ import { DeleteIcon } from '../icons'
 
 const SkillInput = ({ setSkillContent, deleteAction, id }) => {
 
-    function logObj(e){
+    function handleChange(e){
         const currentSkillId = e.target.closest('[data-id]').dataset.id;
         console.log(`which input is active? ${currentSkillId}`);
         setSkillContent(prevArray=>
@@ -15,15 +15,13 @@ const SkillInput = ({ setSkillContent, deleteAction, id }) => {
                 }
                 : skill
             ) 
-        
             
         )
     }
 
-
   return (
-    <div className='skill' data-id={id}>
-        <InputField readContent={logObj} />
+    <div className='input-list-item' data-id={id}>
+        <InputField readContent={handleChange} />
         <DeleteIcon className='delete-btn' action={deleteAction}/>
     </div>
   )
