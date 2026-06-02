@@ -1,37 +1,42 @@
-import InputField from './InputField'
 import { DeleteIcon } from '../icons'
 
-const SectionItem = ({ setSectionItems, deleteAction, id, setSectionContent }) => {
+const SectionItem = ({ value, sectionItemId, deleteAction, setSectionContent, section }) => {
 
 
     function handleChange(e) {
-    const currentSectionItemId = e.target.closest('[data-id]').dataset.id;
-    const newContentValue = e.target.value; // Extract value once
+        const newContentValue = e.target.value; // Extract value once
     
+        setSectionContent((prevSectionArray)=> {
+            return prevSectionArray.map(sectionObj => {
+                if(sectionObj.id === section.id){
+                    /* return the object with the a new value for the content property for the section list item object
+                    whose id corresponds with the sectionItemId
+                    */
+                const updatedSectionItems = sectionObj.sectionItems.map(sectionItem => {
+                        if(sectionItem.id === sectionItemId) {
+                            return {
+                                ...sectionItem, content: newContentValue
+                            }
+                        } else {
+                            return sectionItem
+                        }
+                })
+                return {...sectionObj, sectionItems: updatedSectionItems }
+                } else {
+                    return sectionObj
+                }
+            })
+        })
     
-    setSectionItems(prevObj => {
-        const updatedContents = prevObj.contents.map(sectionItem =>
-        sectionItem.id === currentSectionItemId 
-            ? { ...sectionItem, content: newContentValue }
-            : sectionItem
-        );
-        
-        setSectionContent(prevArray =>
-        prevArray.map(section =>
-            section.id === prevObj.id
-            ? { ...section, sectionItems: updatedContents } 
-            : section
-        )
-        );
-        
-        return { ...prevObj, contents: updatedContents };
-    });
+
     }
 
   return (
-    <div className='input-list-item' data-id={id}>
-        <InputField readContent={handleChange} />
-        <DeleteIcon className='delete-btn' action={deleteAction}/>
+    <div className='input-list-item'>
+        <div className='no-label-input'>
+            <input className={`text-label`}  type='text' onChange={handleChange} value={value} />
+        </div>
+        <DeleteIcon className='delete-btn' action={() => deleteAction(sectionItemId)}/>
     </div>
   )
 
