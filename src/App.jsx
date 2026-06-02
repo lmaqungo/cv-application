@@ -3,15 +3,16 @@ import './App.css';
 import AccordionMenu from './components/AccordionMenu';
 import DummyPDF from './components/DummyPDF';
 import Accordion from './components/Accordion';
-import FirstName from './components/inputs/FirstName';
-import LastName from './components/inputs/LastName';
-import JobTitle from './components/inputs/JobTitle';
-import Phone from './components/inputs/Phone';
-import Email from './components/inputs/Email';
-import Github from './components/inputs/Github';
-import PersonalWebsite from './components/inputs/PersonalWebsite';
-import Location from './components/inputs/Location';
-import ProfileSummary from './components/inputs/ProfileSummary';
+import FirstName from './components/personalInformation/FirstName';
+import LastName from './components/personalInformation/LastName';
+import JobTitle from './components/personalInformation/JobTitle';
+import Phone from './components/personalInformation/Phone';
+import Email from './components/personalInformation/Email';
+import Github from './components/personalInformation/Github';
+import PersonalWebsite from './components/personalInformation/PersonalWebsite';
+import Location from './components/personalInformation/Location';
+import ProfileSummary from './components/profileSummary/ProfileSummary';
+
 import AddItemButton from './components/AddItemButton';
 import InnerAccordionMenu from './components/InnerAccordionMenu';
 import SkillMenu from './components/SkillMenu';
@@ -72,16 +73,6 @@ function App() {
     }
   };
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
-  const [github, setGithub] = useState("");
-  const [personalWebsite, setPersonalWebsite] = useState("");
-  const [location, setLocation] = useState("");
-  
-  const [profileSummary, setProfileSummary] = useState("");
   
   const [jobs, setJobs] = useState([templateJob()]); 
 
@@ -90,6 +81,18 @@ function App() {
   const [skills, setSkills] = useState([]);
 
   const [sections, setSections] = useState([]);
+
+  const [person, setPerson] = useState({
+    firstName:'',
+    lastName:'', 
+    jobTitle:'', 
+    phone:'', 
+    email:'', 
+    github:'',
+    website:'', 
+    location:'', 
+    profileSummary: ''
+  })
 
   const jobsRef = useRef(jobs); 
   const educationRef = useRef(education); 
@@ -115,17 +118,8 @@ function App() {
     sectionsRef.current = sections; 
   }, [sections]); 
 
-  useEffect(() =>{
-    jobs.forEach((job, index)=> console.log(`job ${index + 1} position: ${job.child.position}`));
-  }, [jobs])
 
-  useEffect(
-    () =>{
-      skills.forEach((skill, index)=>console.log(`skill ${index+1}: ${skill.content}`));
-    }, [skills]
-  )
 
-  
   function addJob(){
     setJobs(c=> {
       const newArr = [...c, templateJob()
@@ -278,15 +272,18 @@ function App() {
 
     const defaultValues = generateDefaultValues();
 
-    setFirstName(defaultValues.firstName);
-    setLastName(defaultValues.lastName);
-    setJobTitle(defaultValues.jobTitle);
-    setPhoneNumber(defaultValues.phoneNumber);
-    setEmailAddress(defaultValues.emailAddress);
-    setGithub(defaultValues.github);
-    setPersonalWebsite(defaultValues.personalWebsite);
-    setLocation(defaultValues.location);
-    setProfileSummary(defaultValues.profileSummary);
+    setPerson({
+      firstName: defaultValues.firstName,
+      lastName: defaultValues.lastName, 
+      jobTitle: defaultValues.jobTitle, 
+      phone: defaultValues.phoneNumber, 
+      email: defaultValues.emailAddress, 
+      github: defaultValues.github,
+      website: defaultValues.personalWebsite, 
+      location: defaultValues.location, 
+      profileSummary: defaultValues.profileSummary,
+    })
+
     setJobs(
       [
         templateJob(
@@ -312,7 +309,14 @@ function App() {
     
   }
 
-  
+  function handleTyping(e){
+    setPerson(
+      {
+        ...person, 
+        [e.target.name]: e.target.value
+      }
+    )
+  }
 
   return ( 
     <div className='main'>
@@ -322,25 +326,25 @@ function App() {
         <Accordion title='Personal Information'>
           <div className="input-menu">
             <div className="input-menu-layer-shared">
-                <FirstName setter={setFirstName} value={firstName}/>
-                <LastName setter={setLastName} value={lastName}/>
+                <FirstName onChange={handleTyping} value={person.firstName}/>
+                <LastName onChange={handleTyping} value={person.lastName}/>
             </div>
-            <JobTitle setter={setJobTitle} value={jobTitle}/>
+            <JobTitle onChange={handleTyping} value={person.jobTitle}/>
             <div className="input-menu-layer-shared">
-                <Phone setter={setPhoneNumber} value={phoneNumber}/>
-                <Email setter={setEmailAddress} value={emailAddress}/>
+                <Phone onChange={handleTyping} value={person.phone}/>
+                <Email onChange={handleTyping} value={person.email}/>
             </div>
             <div className="input-menu-layer-shared">
-                <Github setter={setGithub} value={github}/>
-                <PersonalWebsite setter={setPersonalWebsite} value={personalWebsite}/>
+                <Github onChange={handleTyping} value={person.github}/>
+                <PersonalWebsite onChange={handleTyping} value={person.website}/>
             </div>
-            <Location setter={setLocation} value={location}/>
+            <Location onChange={handleTyping} value={person.location}/>
           </div>
         </Accordion>
 
         <Accordion title='Profile Summary'>
           <div className='input-menu'>
-            <ProfileSummary setter={setProfileSummary} value={profileSummary}/>
+            <ProfileSummary onChange={handleTyping} value={person.profileSummary} />
           </div>
         </Accordion>
         
@@ -372,20 +376,19 @@ function App() {
           </div>
         </Accordion>
         
-
       </AccordionMenu>
       <DummyPDF ref={contentRef}>
         <div className="cv-header">
-          <h1 id='name'>{`${firstName} ${lastName}`}</h1> 
-          <h1 className='job-title'>{ jobTitle }</h1>
+          <h1 id='name'>{`${person.firstName} ${person.lastName}`}</h1> 
+          <h1 className='job-title'>{ person.jobTitle }</h1>
         </div>
         <div className="cv-main">
 
           <div className="left">
             <div className="section">
-              {profileSummary && <h1 className='header'>Profile</h1>}
+              {person.profileSummary && <h1 className='header'>Profile</h1>}
               <div className="body">
-                <p id='profile' >{ profileSummary }</p>
+                <p id='profile' >{ person.profileSummary }</p>
               </div>
             </div>
             {jobs.length> 0 && <hr className='dotted-line'/>}
@@ -406,13 +409,13 @@ function App() {
 
           <div className="right">
             <div className="section">
-              { (phoneNumber || emailAddress || personalWebsite || github || location) && <h1 className='header'>Contact</h1>}
+              { (person.phone || person.email || person.website || person.github || person.location) && <h1 className='header'>Contact</h1>}
               <div className='body'>
-                <p>{ phoneNumber }</p>
-                <p>{ emailAddress }</p>
-                <p>{ personalWebsite }</p>
-                <p>{ github }</p>
-                <p>{ location }</p>
+                <p>{ person.phone }</p>
+                <p>{ person.email }</p>
+                <p>{ person.website }</p>
+                <p>{ person.github }</p>
+                <p>{ person.location }</p>
               </div>
             </div>
             { (sections.length > 0 || skills.length > 0) && <hr className='dotted-line'/>}
