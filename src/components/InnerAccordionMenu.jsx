@@ -54,7 +54,7 @@ const InnerAccordionMenu = ({ objArray, setObjContent, type }) => {
         const arr = objArray.map(section=>{ return(
             
             <Accordion id={section.id} title={!section.sectionName ? 'Section' : section.sectionName} isActive = {activeAccordion === section.id} onShow = {handleClick} type='inner' number={section.id} deleteAction={section.deleteAction} key={section.id} accordionIdSetter={setActiveAccordionId}>
-                <Section sectionId={section.id} setSectionContent={setObjContent}/>
+                <Section sectionArray={objArray} section={section} sectionId={section.id} setSectionContent={setObjContent}/>
             </Accordion>
             )
             

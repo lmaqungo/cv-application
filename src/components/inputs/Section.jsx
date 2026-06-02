@@ -5,12 +5,12 @@ import LinkItemMenu from '../LinkItemMenu';
 import { v4 as uuid } from 'uuid' ;
 import { useState, useEffect, useRef } from 'react';
 
-const Section = ({ setSectionContent, sectionId }) => {
+const Section = ({ sectionArray, section, setSectionContent, sectionId }) => {
     
     const templateSectionItem = (content='') => {
         return{
             id: uuid(), 
-            deleteAction: deleteSectionItem, 
+            deleteAction: deleteItem, 
             content: content
         }
     };
@@ -29,6 +29,18 @@ const Section = ({ setSectionContent, sectionId }) => {
     
     const sectionItemsRef = useRef(sectionItems);
     const linkItemsRef = useRef(linkItems);
+
+    const sectionsRef = useRef(sectionArray);
+
+    useEffect(() => {
+        section.sectionItems.forEach(item => {
+            console.log(`section item id: ${item.id}`)
+        })
+    }, [section])
+
+    useEffect(() => {
+        sectionsRef.current = sectionArray
+    }, [sectionArray])
 
     useEffect(() => {
     sectionItemsRef.current = sectionItems; 
@@ -62,10 +74,59 @@ const Section = ({ setSectionContent, sectionId }) => {
     )
   }
 
+  function addItem(){
+    /* 
+        Grab the old section object
+        add a new template section item to the array field
+        update the section array with this new section object instance
+        set the new state with the state setter fn
+    */
+
+    setSectionContent((prevSectionArray)=> {
+        return prevSectionArray.map(sectionObj => {
+            if(sectionObj.id === section.id) {
+
+                return {...sectionObj, sectionItems: [...sectionObj.sectionItems, templateSectionItem()] }
+            } else {
+                return sectionObj
+            }
+        })
+    })
+
+  }
+
+  function deleteItem(sectionItemId){
+    
+      setSectionContent(prevArray => {
+          return prevArray.map(sectionObj => {
+              if(sectionObj.id === section.id){
+                  const prevSectionItemsArr = [...sectionObj.sectionItems]
+                  const itemToDelete = prevSectionItemsArr.findIndex(
+                      element => element.id === sectionItemId
+                  ); 
+                  console.log(`index of section item to delete: ${itemToDelete}`)
+                  prevSectionItemsArr.splice(itemToDelete, 1);
+                  return {...sectionObj, sectionItems: prevSectionItemsArr}
+              } else {
+                  return sectionObj
+              }
+          })
+      })
+
+    /*find the list item to remove 
+      remove from the section object array
+      update the section array with this nrw section object using state
+
+      But this will require a new method for adding, as well as for rendering the section items
+    */
+
+  }
+
     function deleteSectionItem(e){
-    const prevArr = [...sectionItemsRef.current.contents]; 
+    const prevArr = [...sectionsRef.current.contents]; 
     const itemToDelete= prevArr.findIndex(element=> element.id === e.target.closest('[data-id]').dataset.id); 
     prevArr.splice(itemToDelete, 1); 
+    
     setSectionItems(prevObj=> ({
         ...prevObj, 
         contents: prevArr
@@ -102,11 +163,11 @@ const Section = ({ setSectionContent, sectionId }) => {
   return (
     <div class='input-menu'>
         <SectionName setter={handleNameChange}/>
-        <SectionItemMenu sectionItemsObj={sectionItems} setSectionItems={setSectionItems} setSectionContent= {setSectionContent}/>
+        <SectionItemMenu section={section} setSectionContent= {setSectionContent}/>
         <LinkItemMenu linkItemsObj={linkItems} setLinkItems={setLinkItems} setSectionContent= {setSectionContent}/>
         <div className="section-buttons">
             <AddItemButton title="Add link" addAction={addLinkItem}/>
-            <AddItemButton title="Add section item" addAction={addSectionItem}/>
+            <AddItemButton title="Add section item" addAction={addItem}/>
         </div>
     </div>
   )

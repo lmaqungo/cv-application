@@ -1,13 +1,12 @@
 import SectionItem from './SectionItem'
 
-const SectionItemMenu = ({ sectionItemsObj, setSectionItems, setSectionContent }) => {
+const SectionItemMenu = ({ section, setSectionContent }) => {
   return (
     <div className='container'>
         {
-            sectionItemsObj.contents.map( sectionItem=>{
+            section.sectionItems.map( sectionItem=>{
                 return(
-                    <SectionItem id={sectionItem.id} deleteAction={sectionItem.deleteAction} key={sectionItem.id} setSectionItems={setSectionItems} 
-                     setSectionContent={setSectionContent}/>
+                    <SectionItem value={sectionItem.content} sectionItemId ={sectionItem.id} deleteAction={sectionItem.deleteAction} key={sectionItem.id} setSectionContent={setSectionContent} section={section}/>
                 )
             }
             )

@@ -73,7 +73,6 @@ function App() {
     }
   };
 
-  
   const [jobs, setJobs] = useState([templateJob()]); 
 
   const [education, setEducation] = useState([templateEducation()]); 
