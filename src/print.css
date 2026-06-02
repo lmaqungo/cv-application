@@ -1,8 +1,8 @@
 
 
 #page{
-  width: 595px;
-  height: 842px;
+  width: 480px;
+  height: 678px;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   padding: 32px;
   display: flex;
@@ -59,15 +59,20 @@
   gap: 12px;
 }
 
+.job-title{
+  letter-spacing: 1px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
 .header{
   letter-spacing: 1px;
   font-size: 14px;
-  /* color: var(--primary-color); */
   text-transform: uppercase;
 }
 
 .section *{
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .section ul{
@@ -107,8 +112,29 @@
     transform: scale(1) !important;
     transform-origin: top left;
     page-break-after: always;
-    font-size: 16px !important; 
   }
+
+  #name {
+    font-size: 48px;
+  }
+  
+  #page p{
+    font-size: 14px;
+  }
+
+  #page li{
+    font-size: 14px;
+  }
+
+  #page .header{
+    font-size: 16px;
+  }
+
+  #page .job-title {
+    font-size: 20px;
+  }
+
+  
 
   * {
     -webkit-print-color-adjust: exact !important;

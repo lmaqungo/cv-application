@@ -8,7 +8,7 @@ const SectionItem = ({ setSectionItems, deleteAction, id, setSectionContent }) =
     const currentSectionItemId = e.target.closest('[data-id]').dataset.id;
     const newContentValue = e.target.value; // Extract value once
     
-    // SINGLE FUNCTIONAL UPDATE - Updates BOTH states AT ONCE
+    
     setSectionItems(prevObj => {
         const updatedContents = prevObj.contents.map(sectionItem =>
         sectionItem.id === currentSectionItemId 
@@ -16,11 +16,10 @@ const SectionItem = ({ setSectionItems, deleteAction, id, setSectionContent }) =
             : sectionItem
         );
         
-        // IMMEDIATELY update parent with NEW contents
         setSectionContent(prevArray =>
         prevArray.map(section =>
             section.id === prevObj.id
-            ? { ...section, sectionItems: updatedContents }  // ✅ FRESH array!
+            ? { ...section, sectionItems: updatedContents } 
             : section
         )
         );

@@ -1,4 +1,3 @@
-import React from 'react'
 import SectionName from './SectionName'
 import AddItemButton from '../AddItemButton';
 import SectionItemMenu from '../SectionItemMenu';
@@ -7,7 +6,7 @@ import { v4 as uuid } from 'uuid' ;
 import { useState, useEffect, useRef } from 'react';
 
 const Section = ({ setSectionContent, sectionId }) => {
-
+    
     const templateSectionItem = (content='') => {
         return{
             id: uuid(), 
@@ -26,7 +25,7 @@ const Section = ({ setSectionContent, sectionId }) => {
     };
 
     const [sectionItems, setSectionItems] = useState({id: sectionId, contents: [templateSectionItem()]});
-    const [linkItems, setLinkItems] = useState({id: sectionId, contents: []});
+    const [linkItems, setLinkItems] = useState({id: sectionId, contents: []})
     
     const sectionItemsRef = useRef(sectionItems);
     const linkItemsRef = useRef(linkItems);
@@ -113,4 +112,4 @@ const Section = ({ setSectionContent, sectionId }) => {
   )
 }
 
-export default Section 
+export default Section  

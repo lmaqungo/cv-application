@@ -119,10 +119,12 @@ function App() {
         height: 297mm !important;
         padding: 32px !important;
         box-sizing: border-box !important;
-        font-size: 16px !important;
-        transform: scale(1) !important;
+        transform: scale(0.5) !important;
         transform-origin: top left;
       }
+        .header{
+          font-size: 30px;
+        }
       * {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
@@ -130,6 +132,11 @@ function App() {
     }
   `,
   });
+
+  /*
+    use the pageStyle property to style the font size of the @media print. Give the html text tags a classname that is
+    associated with a particular font size.  
+  */
 
   useEffect(() => {
     jobsRef.current = jobs; 
@@ -156,31 +163,6 @@ function App() {
       skills.forEach((skill, index)=>console.log(`skill ${index+1}: ${skill.content}`));
     }, [skills]
   )
-
-  // useEffect(() =>
-  //   sections.forEach(section=>{
-  //     console.log(`section name: ${section.sectionName}\nsection items count: ${section.content.length}`);
-  //     section.content.forEach(sectionItem =>
-  //       console.log(`section item: ${sectionItem.content}`)
-  //     )
-  //   }
-
-  //   )
-  // , [sections]);
-  
-  // useEffect(() =>
-  //   sections.forEach(section=>{
-  //     console.log(`section name: ${section.sectionName}`);
-  //     section.linkItems.forEach(linkItem =>{
-  //        console.log(`link item: ${linkItem.linkContent}`);
-  //        console.log(`link link: ${linkItem.href}`);
-  //     }
-       
-  //     )
-  //   }
-
-  //   )
-  // , [sections]);
 
   
   function addJob(){
@@ -355,19 +337,18 @@ function App() {
         )
       ]
     )
-    /* 
-    setSections(
+    setEducation(
       [
-      templateSection(
-      defaultValues.section1.sectionName, [
-      templateSectionItem(defaultValues.section1.sectionItems[0])
-      ]
-      )
+        templateEducation(
+          defaultValues.education1.school,
+          defaultValues.education1.course,
+          defaultValues.education1.startDate,
+          defaultValues.education1.endDate,
+          defaultValues.education1.description,
+        )
       ]
     )
     
-    */
-
   }
 
 
@@ -462,7 +443,7 @@ function App() {
       <DummyPDF ref={contentRef}>
         <div className="cv-header">
           <h1 id='name'>{`${firstName} ${lastName}`}</h1> 
-          <h1 className='header'>{ jobTitle }</h1>
+          <h1 className='job-title'>{ jobTitle }</h1>
         </div>
         <div className="cv-main">
 
@@ -470,7 +451,7 @@ function App() {
             <div className="section">
               {profileSummary && <h1 className='header'>Profile</h1>}
               <div className="body">
-                <p>{ profileSummary }</p>
+                <p id='profile' >{ profileSummary }</p>
               </div>
             </div>
             {jobs.length> 0 && <hr className='dotted-line'/>}
@@ -508,7 +489,6 @@ function App() {
         </div>
       </DummyPDF>
       <div className="toolbar">
-        <Tool type='delete'/>
         <Tool type='refresh' buttonAction={setDefaults}/>
         <Tool type='print' buttonAction={() => handlePrint(reactToPrintContent)}/>
       </div>

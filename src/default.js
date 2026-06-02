@@ -16,10 +16,13 @@ const generateDefaultValues = () => ({
         endDate: 'Dec 2028',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie risus at mattis finibus.\nDonec efficitur in massa vitae egestas. Nulla facilisi. Mauris sollicitudin enim pellentesque neque fringilla molestie.\nPellentesque luctus vestibulum facilisis. Fusce luctus, eros eu molestie vehicula, sem nisi sollicitudin sem, et venenatis lectus diam id odio' 
     },
-    section1: {
-        sectionName: 'Languages',
-        sectionItems: ['isiZulu', 'seSotho']
-    }
+    education1: {
+        school: 'Stanford University' ,
+        course: 'Bachelors of Science in Computer Science', 
+        startDate: 'Feb 2018' , 
+        endDate: 'Nov 2021' , 
+        description: 'Aenean vulputate dolor id turpis aliquet faucibus. Sed vulputate tellus dui, tristique suscipit arcu gravida nec.\nCras sit amet metus eu sapien semper cursus. Donec finibus tincidunt pellentesque. Cras nec euismod ex.\n Mauris pretium, neque non elementum consequat, turpis ex sollicitudin est, eu pulvinar libero mi et dui. Mauris eleifend diam id mollis ornare.'
+    },
 })
 
 export { generateDefaultValues }
