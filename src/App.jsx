@@ -96,47 +96,8 @@ function App() {
   const skillsRef = useRef(skills); 
   const sectionsRef = useRef(sections);
 
-  
   const contentRef = useRef(null);
-  const reactToPrintContent = () => {
-    return contentRef.current;
-  }
-
-  const handlePrint = useReactToPrint({
-    documentTitle: 'untitled cv', 
-    openWindow: true,
-    pageStyle: `
-    @page { margin: 0; }
-    @media print {
-      html, body {
-        width: 210mm !important;
-        height: 297mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      #page {
-        width: 210mm !important;
-        height: 297mm !important;
-        padding: 32px !important;
-        box-sizing: border-box !important;
-        transform: scale(0.5) !important;
-        transform-origin: top left;
-      }
-        .header{
-          font-size: 30px;
-        }
-      * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-      }
-    }
-  `,
-  });
-
-  /*
-    use the pageStyle property to style the font size of the @media print. Give the html text tags a classname that is
-    associated with a particular font size.  
-  */
+  // above statement is need for react-to-print
 
   useEffect(() => {
     jobsRef.current = jobs; 
@@ -351,33 +312,6 @@ function App() {
     
   }
 
-
-  const downloadPDF = ()=> {
-    console.log('download button clicked');
-    const cv = document.querySelector('#page'); 
-    html2canvas(cv).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4", true);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = canvas.width;
-        const imgHeight = canvas.height;
-        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-        const imgX = (pdfWidth - imgWidth * ratio) / 2;
-        const imgY = (pdfHeight - imgHeight * ratio) / 2;
-        pdf.addImage(
-          imgData, 
-          'PNG', 
-          imgX, 
-          imgY, 
-          imgWidth * ratio, 
-          imgHeight * ratio
-        ); 
-        pdf.save("Untitled-cv.pdf");
-    }
-    ); 
-    console.log('download process complete')
-  }
   
 
   return ( 
@@ -490,7 +424,7 @@ function App() {
       </DummyPDF>
       <div className="toolbar">
         <Tool type='refresh' buttonAction={setDefaults}/>
-        <Tool type='print' buttonAction={() => handlePrint(reactToPrintContent)}/>
+        <Tool type='print'/>
       </div>
 
     </div>
