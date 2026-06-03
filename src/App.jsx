@@ -248,13 +248,26 @@ function App() {
       <>
       <div className='section'>
         <h1 className='header'>{section.sectionName}</h1>
-        <div className="body">
+        <div>
           <ul>
             {section.sectionItems && 
               section.sectionItems.map(
                 sectionItem=>{
                   return(
                     <li key={sectionItem.id}>{sectionItem.content}</li>
+                  )
+                }
+              )
+            }
+          </ul>
+          <ul>
+            {section.linkItems && 
+              section.linkItems.map(
+                linkItem=>{
+                  return(
+                    <li key={linkItem.id}>
+                      <a href={linkItem.href}>{linkItem.linkContent}</a>
+                    </li>
                   )
                 }
               )

@@ -1,10 +1,10 @@
-import { DeleteIcon } from '../icons'
+
+import { DeleteIcon } from "../../icons";
 
 const SectionItem = ({ value, sectionItemId, deleteAction, setSectionContent, section }) => {
 
-
     function handleChange(e) {
-        const newContentValue = e.target.value; // Extract value once
+        const newContentValue = e.target.value; 
     
         setSectionContent((prevSectionArray)=> {
             return prevSectionArray.map(sectionObj => {
@@ -27,8 +27,6 @@ const SectionItem = ({ value, sectionItemId, deleteAction, setSectionContent, se
                 }
             })
         })
-    
-
     }
 
   return (
@@ -42,4 +40,19 @@ const SectionItem = ({ value, sectionItemId, deleteAction, setSectionContent, se
 
 }
 
-export default SectionItem
+const SectionItemMenu = ({ section, setSectionContent }) => {
+  return (
+    <div className='container'>
+        {
+            section.sectionItems.map( sectionItem=>{
+                return(
+                    <SectionItem value={sectionItem.content} sectionItemId ={sectionItem.id} deleteAction={sectionItem.deleteAction} key={sectionItem.id} setSectionContent={setSectionContent} section={section}/>
+                )
+            }
+            )
+        }
+    </div>
+  )
+}
+
+export default SectionItemMenu
