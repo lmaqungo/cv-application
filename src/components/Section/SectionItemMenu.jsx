@@ -34,7 +34,7 @@ const SectionItem = ({ value, sectionItemId, deleteAction, setSectionContent, se
         <div className='no-label-input'>
             <input className={`text-label`}  type='text' onChange={handleChange} value={value} />
         </div>
-        <DeleteIcon className='delete-btn' action={() => deleteAction(sectionItemId)}/>
+        <DeleteIcon className='delete-btn' action={() => deleteAction(sectionItemId, section)}/>
     </div>
   )
 

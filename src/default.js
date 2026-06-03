@@ -23,6 +23,11 @@ const generateDefaultValues = () => ({
         endDate: 'Nov 2021' , 
         description: 'Aenean vulputate dolor id turpis aliquet faucibus. Sed vulputate tellus dui, tristique suscipit arcu gravida nec.\nCras sit amet metus eu sapien semper cursus. Donec finibus tincidunt pellentesque. Cras nec euismod ex.\n Mauris pretium, neque non elementum consequat, turpis ex sollicitudin est, eu pulvinar libero mi et dui. Mauris eleifend diam id mollis ornare.'
     },
+    section1: {
+        sectionName: 'Languages', 
+        sectionItems: ['isiXhosa', 'isiZulu'], 
+        linkItems: [{href: 'www.google.com', linkContent: 'Language profile'}]
+    }
 })
 
 export { generateDefaultValues }

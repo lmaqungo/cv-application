@@ -63,13 +63,15 @@ function App() {
     }
   };
 
-  const templateSection = (sectionName='') => {
+  const templateSection = (sectionName='', sectionItems = [], linkItems = []) => {
     return{
       id: uuid(), 
       sectionName: sectionName, 
       deleteAction: deleteSection, 
-      sectionItems: [],
-      linkItems: []
+      addSectionItem: addSectionItem,  
+      addLinkItem: addLinkItem, 
+      sectionItems: sectionItems,
+      linkItems: linkItems
     }
   };
 
@@ -181,7 +183,87 @@ function App() {
     setSections(prevArr);  
   }
 
-  
+  const templateSectionItem = (content='') => {
+        return{
+            id: uuid(), 
+            deleteAction: deleteSectionItem, 
+            content: content
+        }
+    };
+
+    const templateLinkItem = (href='', linkContent='') => {
+        return{
+            id: uuid(), 
+            deleteAction: deleteLinkItem, 
+            href: href, 
+            linkContent: linkContent
+        }
+    };
+
+    function addSectionItem(section){
+
+        setSections((prevSectionArray)=> {
+            return prevSectionArray.map(sectionObj => {
+                if(sectionObj.id === section.id) {
+
+                    return {...sectionObj, sectionItems: [...sectionObj.sectionItems, templateSectionItem()] }
+                } else {
+                    return sectionObj
+                }
+        })
+    })
+
+  }
+
+  function addLinkItem(section){
+     setSections((prevSectionArray)=> {
+        return prevSectionArray.map(sectionObj => {
+            if(sectionObj.id === section.id) {
+
+                return {...sectionObj, linkItems: [...sectionObj.linkItems, templateLinkItem()] }
+            } else {
+                return sectionObj
+            }
+        })
+    })
+  }
+
+  function deleteSectionItem(sectionItemId, section){
+    
+      setSections(prevArray => {
+          return prevArray.map(sectionObj => {
+              if(sectionObj.id === section.id){
+                  const prevSectionItemsArr = [...sectionObj.sectionItems]
+                  const itemToDelete = prevSectionItemsArr.findIndex(
+                      element => element.id === sectionItemId
+                  ); 
+                  prevSectionItemsArr.splice(itemToDelete, 1);
+                  return {...sectionObj, sectionItems: prevSectionItemsArr}
+              } else {
+                  return sectionObj
+              }
+          })
+      })
+  }
+
+  function deleteLinkItem(linkItemId, section){
+
+    setSections(prevArray => {
+        return prevArray.map(sectionObj => {
+            if(sectionObj.id === section.id){
+                const prevLinkItemsArr = [...sectionObj.linkItems]
+                const itemToDelete = prevLinkItemsArr.findIndex(
+                    element => element.id === linkItemId
+                ); 
+                prevLinkItemsArr.splice(itemToDelete, 1);
+                return {...sectionObj, linkItems: prevLinkItemsArr}
+            } else {
+                return sectionObj
+            }
+        })
+      })
+  }
+
   function RenderJob({ job }){
     return(
       <div className='section-gap'>
@@ -315,6 +397,15 @@ function App() {
           defaultValues.education1.startDate,
           defaultValues.education1.endDate,
           defaultValues.education1.description,
+        )
+      ]
+    )
+    setSections(
+      [
+        templateSection(
+          defaultValues.section1.sectionName, 
+          [],
+          defaultValues.section1.linkItems.map(item => templateLinkItem(item.href, item.linkContent) )
         )
       ]
     )

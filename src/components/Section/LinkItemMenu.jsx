@@ -37,7 +37,7 @@ const LinkItem = ({ linkItem, linkItemId, deleteAction, section, setSectionConte
                 <input className='text-label' name='href' type='text' onChange={handleChange} value={linkItem.href} placeholder='Link URL'/>
             </div>
         </div>
-        <DeleteIcon className='delete-btn' action={() => deleteAction(linkItemId)}/>
+        <DeleteIcon className='delete-btn' action={() => deleteAction(linkItemId, section)}/>
     </div>
   )
 }
