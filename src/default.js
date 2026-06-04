@@ -27,6 +27,18 @@ const generateDefaultValues = () => ({
         sectionName: 'Languages', 
         sectionItems: ['isiXhosa', 'isiZulu'], 
         linkItems: [{href: 'www.google.com', linkContent: 'Language profile'}]
+    },
+    section2: {
+        sectionName: 'Interests', 
+        sectionItems: ['Money', 'Clothes'], 
+        linkItems: []
+    },
+    section3: {
+        sectionName: 'Certificates', 
+        sectionItems: [],
+        linkItems: [{href: 'www.google.com', linkContent: 'Language profile'}, 
+                    {href: 'www.google.com', linkContent: 'Language profile'}
+        ]
     }
 })
 

@@ -4,6 +4,14 @@
   --secondary-color: #f2f2f2; 
 }
 
+#root{
+  min-height: 100vh;
+  padding: 48px 32px;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
 
 .accordion-upper{
   display: flex;
@@ -32,7 +40,7 @@
 .accordion{
   background-color: white;
   border-radius: 6px;
-  width: 560px;
+  width: 100%;
   padding: 4px;
   border: 2px solid var(--primary-color);
   /* box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
@@ -77,14 +85,28 @@
   display:flex;
   flex-direction: column;
   gap: 24px;
-}
-
-.main{
-  padding: 48px 32px;
-  display: flex;
-  gap: 48px;
   position: relative;
 }
+
+
+.accordion-container{
+  display:flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+}
+
+.accordion-container * {
+  font-size: 16px;
+}
+
+.hide{
+  display: none
+}
+
+
 
 
 .base-input{
@@ -104,13 +126,8 @@
   gap: 8px;
 }
 
-.input-menu-layer-shared{
-  display: flex;
-  justify-content: space-between;
-}
-
 .input-menu-layer-shared > * {
-  width: 200px;
+  width: 100%;
 }
 
 .text-label{
@@ -192,6 +209,9 @@ input, textarea{
   flex-direction: column;
   align-self: flex-end;
   gap: 16px;
+  position: fixed; 
+  right: 32px;
+  bottom: 48px;
 }
 
 .tool:hover{
@@ -204,5 +224,38 @@ input, textarea{
   justify-content: space-between;
 }
 
+.show-button{
+  display: block
+}
+
+@media (width <= 40rem) { 
+  #root{
+    padding: 12px;
+  }
+
+  .accordion-container{
+    width: 95%;
+  }
+}
+
+@media (width >= 72rem){
+
+  .input-menu-layer-shared{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .input-menu-layer-shared > * {
+    width: 45%;
+  }
+
+  .show-button{
+    display: none
+  }
+
+  .hide{
+    display: flex;
+  }
+}
 
 

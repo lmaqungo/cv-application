@@ -1,9 +1,11 @@
 import '../print.css'
 
-const DummyPDF = ({ children, ref }) => {
+const DummyPDF = ({ children, ref, show }) => {
   return (
-    <div id="page" ref={ref}>
-        { children }
+    <div className={`cv-container ${!show && 'hide' } `} >
+      <div id="page" ref={ref}>
+          { children }
+      </div>
     </div>
   )
 }

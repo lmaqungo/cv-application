@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Accordion from './Accordion'
 import React from 'react';
 
-const AccordionMenu = ({ children }) => {
+const AccordionMenu = ({ children, show }) => {
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -12,7 +12,7 @@ const AccordionMenu = ({ children }) => {
 
 
   return ( 
-    <div className={"container"}>
+    <div className={`accordion-container ${!show && 'hide' } `}>
         {React.Children.map(children, (accordion, index) => {
           if(accordion.type === Accordion){
               return (

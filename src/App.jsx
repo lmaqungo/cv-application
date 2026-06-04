@@ -83,6 +83,10 @@ function App() {
 
   const [sections, setSections] = useState([]);
 
+  const [toggleEdit, setToggleEdit] = useState(true);
+
+  useEffect(() => console.log(`show accordion? ${toggleEdit}`), [toggleEdit])
+
   const [person, setPerson] = useState({
     firstName:'',
     lastName:'', 
@@ -268,14 +272,14 @@ function App() {
     return(
       <div className='section-gap'>
         <div className="upper-content">
-          <p className='bold'>{job.company}</p>
-          <p>{`${job.startDate}-${job.endDate}`}</p>
+          <p className='bold normal-text'>{job.company}</p>
+          <p className='normal-text' >{`${job.startDate}-${job.endDate}`}</p>
         </div>
-        <p>{job.position}</p>
+        <p className='normal-text' >{job.position}</p>
         <ul>
           {job.description.split('\n').map(point=>{
             return(
-              <li>{point}</li>
+              <li className='normal-text' >{point}</li>
             )
           }
           )}
@@ -294,7 +298,7 @@ function App() {
               skills.map(
                 skill=>{
                   return(
-                    <li>{skill.content}</li>
+                    <li className='normal-text' >{skill.content}</li>
                   )
                 }
               )
@@ -309,14 +313,14 @@ function App() {
     return(
       <div className='section-gap'>
         <div className="upper-content">
-          <p className='bold' >{edu.school}</p>
-          <p>{`${edu.startDate}-${edu.endDate}`}</p>
+          <p className='bold normal-text' >{edu.school}</p>
+          <p className='normal-text' >{`${edu.startDate}-${edu.endDate}`}</p>
         </div>
-        <p>{edu.course}</p>
+        <p className='normal-text' >{edu.course}</p>
         <ul>
           {edu.description.split('\n').map(point=>{
             return(
-              <li>{point}</li>
+              <li className='normal-text' >{point}</li>
             )
           }
           )}
@@ -336,18 +340,18 @@ function App() {
               section.sectionItems.map(
                 sectionItem=>{
                   return(
-                    <li key={sectionItem.id}>{sectionItem.content}</li>
+                    <li className='normal-text' key={sectionItem.id}>{sectionItem.content}</li>
                   )
                 }
               )
             }
           </ul>
-          <ul>
+          <ul >
             {section.linkItems && 
               section.linkItems.map(
                 linkItem=>{
                   return(
-                    <li key={linkItem.id}>
+                    <li  className='normal-text' key={linkItem.id}>
                       <a href={linkItem.href}>{linkItem.linkContent}</a>
                     </li>
                   )
@@ -422,9 +426,8 @@ function App() {
   }
 
   return ( 
-    <div className='main'>
-
-      <AccordionMenu>
+    <>
+      <AccordionMenu show={toggleEdit} >
 
         <Accordion title='Personal Information'>
           <div className="input-menu">
@@ -480,10 +483,10 @@ function App() {
         </Accordion>
         
       </AccordionMenu>
-      <DummyPDF ref={contentRef}>
+      <DummyPDF ref={contentRef} show={!toggleEdit}>
         <div className="cv-header">
-          <h1 id='name'>{`${person.firstName} ${person.lastName}`}</h1> 
-          <h1 className='job-title'>{ person.jobTitle }</h1>
+          <h1 className='fullName'>{`${person.firstName} ${person.lastName}`}</h1> 
+          <h1 className='header'>{ person.jobTitle }</h1>
         </div>
         <div className="cv-main">
 
@@ -491,7 +494,7 @@ function App() {
             <div className="section">
               {person.profileSummary && <h1 className='header'>Profile</h1>}
               <div className="body">
-                <p id='profile' >{ person.profileSummary }</p>
+                <p className='normal-text' >{ person.profileSummary }</p>
               </div>
             </div>
             {jobs.length> 0 && <hr className='dotted-line'/>}
@@ -514,11 +517,11 @@ function App() {
             <div className="section">
               { (person.phone || person.email || person.website || person.github || person.location) && <h1 className='header'>Contact</h1>}
               <div className='body'>
-                <p>{ person.phone }</p>
-                <p>{ person.email }</p>
-                <p>{ person.website }</p>
-                <p>{ person.github }</p>
-                <p>{ person.location }</p>
+                <p className='normal-text brown' >{ person.phone }</p>
+                <p className='normal-text brown' >{ person.email }</p>
+                <p className='normal-text brown' >{ person.website }</p>
+                <p className='normal-text brown' >{ person.github }</p>
+                <p className='normal-text brown' >{ person.location }</p>
               </div>
             </div>
             { (sections.length > 0 || skills.length > 0) && <hr className='dotted-line'/>}
@@ -529,21 +532,15 @@ function App() {
         </div>
       </DummyPDF>
       <div className="toolbar">
+        <Tool type={toggleEdit ? 'edit' : 'view' } show={true} buttonAction={() => setToggleEdit(!toggleEdit)} />
         <Tool type='refresh' buttonAction={setDefaults}/>
         <Tool type='print'/>
       </div>
 
-    </div>
+    </>
   )
 }
 
 export default App
 
-/* 
-TO DO: 
-Add all default input
-Think about all default inputs. Might be better to put it all inside a function component that returns an object so that I just need to change the inputs there.   
-Increase font size for print
-Create delete input function
-Create restart input function
-*/
+
