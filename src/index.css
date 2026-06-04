@@ -236,6 +236,11 @@ input, textarea{
   .accordion-container{
     width: 95%;
   }
+
+  #root{
+    min-height: auto;
+    height: 100vh;
+  }
 }
 
 @media (width >= 72rem){

@@ -20,9 +20,10 @@
   position: sticky; 
   top: 48px;
   container-type: inline-size;
+  align-self: flex-start;
 }
 
-@container (width < 479px) {
+@container (width < 209mm) {
     #page {
         font-size: 1.85cqh;
     }
@@ -131,6 +132,21 @@
 @media (width >= 72rem){
   .hide{
     display: block
+  }
+}
+
+@media (width <= 48rem) { 
+  .cv-container{
+    position: initial;
+    height: auto;
+    width: 90vw;
+    aspect-ratio: 210 / 297;
+  }
+
+  @container (width < 209mm) {
+    #page {
+        font-size: 3cqw;
+    }
   }
 }
 
