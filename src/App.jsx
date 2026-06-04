@@ -340,7 +340,7 @@ function App() {
               section.sectionItems.map(
                 sectionItem=>{
                   return(
-                    <li className='normal-text' key={sectionItem.id}>{sectionItem.content}</li>
+                    <li className='normal-text brown' key={sectionItem.id}>{sectionItem.content}</li>
                   )
                 }
               )
@@ -351,8 +351,8 @@ function App() {
               section.linkItems.map(
                 linkItem=>{
                   return(
-                    <li  className='normal-text' key={linkItem.id}>
-                      <a href={linkItem.href}>{linkItem.linkContent}</a>
+                    <li  className='normal-text brown' key={linkItem.id}>
+                      <a className='no-link-styling' href={linkItem.href}>{linkItem.linkContent}</a>
                     </li>
                   )
                 }
@@ -524,7 +524,7 @@ function App() {
                 <p className='normal-text brown' >{ person.location }</p>
               </div>
             </div>
-            { (sections.length > 0 || skills.length > 0) && <hr className='dotted-line'/>}
+            { skills.length > 0 && <hr className='dotted-line'/>}
             {skills.length>0 && RenderSkills()}
             {sections.length > 0 && <hr className='dotted-line'/>}
             { sections.map((section, index)=> <RenderSection section={section} key={section.id} addRule={index!==sections.length-1}/>)}
