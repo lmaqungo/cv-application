@@ -28,6 +28,10 @@
     }
 }
 
+.no-link-styling, .no-link-styling:visited, .no-link-styling:hover, .no-link-styling:active{
+  color: inherit;
+  text-decoration: none;
+}
 
 .cv-header{
   display: flex;
