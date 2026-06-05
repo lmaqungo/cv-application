@@ -10,7 +10,6 @@ const AccordionMenu = ({ children, show }) => {
     setActiveAccordion(activeAccordion === id ? null : id); 
   }
 
-
   return ( 
     <div className={`accordion-container ${!show && 'hide' } `}>
         {React.Children.map(children, (accordion, index) => {
@@ -23,7 +22,6 @@ const AccordionMenu = ({ children, show }) => {
             }else{
             console.log(`Invalid child type. Expecting: Accordion. \nProvided child type is: ${accordion.type}`);
           }
-
         }
         )}
     </div>

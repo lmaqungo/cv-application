@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import './App.css';
 import AccordionMenu from './components/AccordionMenu';
 import DummyPDF from './components/DummyPDF';
@@ -23,6 +23,7 @@ import jsPDF from 'jspdf';
 import { useReactToPrint } from 'react-to-print';
 import { generateDefaultValues } from './default';
 
+import { InputValuesContext } from './context/InputValuesContext';
 
 
 function App() {
@@ -30,7 +31,6 @@ function App() {
   const templateJob = (position='', company='', startDate='', endDate='', description='') => {
     return{
       id: uuid(), 
-      deleteAction: deleteJob, 
       child: {
         position: position,
         company: company,
@@ -75,7 +75,9 @@ function App() {
     }
   };
 
-  const [jobs, setJobs] = useState([templateJob()]); 
+  const {jobs, setJobs} = useContext(InputValuesContext)
+
+  // const [jobs, setJobs] = useState([templateJob()]); 
 
   const [education, setEducation] = useState([templateEducation()]); 
 
@@ -124,14 +126,10 @@ function App() {
   }, [sections]); 
 
 
-
   function addJob(){
-    setJobs(c=> {
-      const newArr = [...c, templateJob()
-    ]; 
-    return newArr;
-    })
-  };
+    setJobs(c=> [...c, templateJob()])
+    }; /* function needs to be defined on App level for now, but when accordion menu moves, these functions will move with
+      them */
 
   function addEducation(){
     setEducation(c=>{
@@ -159,12 +157,6 @@ function App() {
     })
   }
   
-  function deleteJob(e){
-    const prevArr = [...jobsRef.current];
-    const itemToDelete = prevArr.findIndex((element) => element.id === e.target.closest('[data-number]').dataset.number);  
-    prevArr.splice(itemToDelete, 1);  
-    setJobs(prevArr);  
-  }
   
   function deleteEducation(e){
     const prevArr = [...educationRef.current];
@@ -382,17 +374,17 @@ function App() {
       profileSummary: defaultValues.profileSummary,
     })
 
-    setJobs(
-      [
-        templateJob(
-          defaultValues.job1.position,
-          defaultValues.job1.company,
-          defaultValues.job1.startDate,
-          defaultValues.job1.endDate,
-          defaultValues.job1.description,
-        )
-      ]
-    )
+    // setJobs(
+    //   [
+    //     templateJob(
+    //       defaultValues.job1.position,
+    //       defaultValues.job1.company,
+    //       defaultValues.job1.startDate,
+    //       defaultValues.job1.endDate,
+    //       defaultValues.job1.description,
+    //     )
+    //   ]
+    // )
     setEducation(
       [
         templateEducation(

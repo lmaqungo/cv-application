@@ -1,31 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
 import Accordion from './Accordion'
 import WorkExperience from './inputs/WorkExperience';
 import Education from './inputs/Education';
 import Section from './Section/Section';
+import { InputValuesContext } from '../context/InputValuesContext';
 
 
 
 const InnerAccordionMenu = ({ objArray, setObjContent, type }) => {
 
+    const { setJobs } = useContext(InputValuesContext)
+ 
     const [activeAccordion, setActiveAccordion] = useState(null);
     const [activeAccordionId, setActiveAccordionId] = useState(null);
 
     function handleClick(id) {
-    setActiveAccordion(activeAccordion === id ? null : id); 
+        setActiveAccordion(activeAccordion === id ? null : id); 
     }
 
-    // useEffect(()=> console.log(`Open accordion id: ${activeAccordionId}`), [activeAccordionId]);
-
-    useEffect(() => {
-        console.log('List container mounted');
-        return () => console.log('List container unmounted');
-    }, []);
+    function deleteJob(jobId){
+        setJobs(prevJobs => prevJobs.filter(job => job.id!== jobId))
+    }
 
     function renderJobs(){
        const arr = objArray.map(job=>{ return(
             
-            <Accordion id={job.id} title={(job.child.position || job.child.company) ? ((job.child.position && job.child.company) ? `${job.child.position}, ${job.child.company}` : `${(job.child.position && job.child.position)} ${(job.child.company && job.child.company)}`) : 'Job position, Company'} isActive = {activeAccordion === job.id} onShow = {handleClick} type='inner' number={job.id} deleteAction={job.deleteAction} key={job.id} accordionIdSetter={setActiveAccordionId}>
+            <Accordion id={job.id} title={(job.child.position || job.child.company) ? ((job.child.position && job.child.company) ? `${job.child.position}, ${job.child.company}` : `${(job.child.position && job.child.position)} ${(job.child.company && job.child.company)}`) : 'Job position, Company'} isActive = {activeAccordion === job.id} onShow = {handleClick} type='inner' number={job.id} deleteAction={ () => deleteJob(job.id) } key={job.id} accordionIdSetter={setActiveAccordionId}>
                 <WorkExperience activeObjId={activeAccordionId}  setJobContent={setObjContent} jobsArray={objArray}/>
             </Accordion>
             )
@@ -67,10 +67,10 @@ const InnerAccordionMenu = ({ objArray, setObjContent, type }) => {
     function renderChildren(){
         switch(type){
             case 'work':
-                // console.log('work!');
+                
                 return renderJobs();
             case 'education':
-                // console.log('education!'); 
+                
                 return renderEducation();
             case 'sections':
                 return renderSections();
