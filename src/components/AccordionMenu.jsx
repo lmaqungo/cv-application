@@ -1,8 +1,13 @@
 import { useState } from 'react'
-import Accordion from './Accordion'
-import React from 'react';
+import WorkExperienceAccordion from './workExperience/WorkExperienceAccordion';
+import EducationAccordion from './education/EducationAccordion';
+import PersonalInformationAccordion from './personalInformation/PersonalInformationAccordion';
+import ProfileSummaryAccordion from './profileSummary/ProfileSummaryAccordion';
+import SkillsAccordion from './skills/SkillsAccordion';
+import MoreAccordion from './more/MoreAccordion';
 
-const AccordionMenu = ({ children, show }) => {
+
+const AccordionMenu = ({  show }) => {
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -12,18 +17,12 @@ const AccordionMenu = ({ children, show }) => {
 
   return ( 
     <div className={`accordion-container ${!show && 'hide' } `}>
-        {React.Children.map(children, (accordion, index) => {
-          if(accordion.type === Accordion){
-              return (
-            <Accordion id={index} title={accordion.props.title} isActive = {activeAccordion === index} onShow = {handleClick} type={accordion.props.type} number={accordion.props.number} deleteAction={accordion.props.deleteAction} accordionIdSetter={null}>
-              {accordion.props.children}
-            </Accordion>
-              )
-            }else{
-            console.log(`Invalid child type. Expecting: Accordion. \nProvided child type is: ${accordion.type}`);
-          }
-        }
-        )}
+      <PersonalInformationAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
+      <ProfileSummaryAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
+      <WorkExperienceAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
+      <EducationAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
+      <SkillsAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
+      <MoreAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
     </div>
   )
 }

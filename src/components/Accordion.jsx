@@ -1,17 +1,14 @@
 import { DropDownArrow, DeleteIcon } from '../icons';
 
-const Accordion = ({ children, title, onShow=null, isActive=null, id, type=null, number=null, deleteAction ,accordionIdSetter=null}) => {
+const Accordion = ({ children, title, onShow=null, isActive=null, type=null, deleteAction }) => {
 
 
-  // use the isActive bool to set active id to the number prop 
+
   
   if(type==='inner'){
-    if(isActive){
-      accordionIdSetter(number);
-    }
     return(
-      <div className="inner-accordion" data-number={number}>
-          <div className="inner-accordion-upper" onClick={ () => onShow(id)}>
+      <div className="inner-accordion" >
+          <div className="inner-accordion-upper" onClick={onShow}>
             <h2>
                 {title}
             </h2>
@@ -27,7 +24,7 @@ const Accordion = ({ children, title, onShow=null, isActive=null, id, type=null,
   }else{
     return (
       <div className="accordion">
-          <div className={isActive ? "accordion-upper accordion-upper-visited" : "accordion-upper" } onClick={ () => onShow(id)}>
+          <div className={isActive ? "accordion-upper accordion-upper-visited" : "accordion-upper" } onClick={onShow}>
             <h2>
                 {title}
             </h2>
