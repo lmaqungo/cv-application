@@ -9,7 +9,7 @@ import MoreAccordion from './more/MoreAccordion';
 
 const AccordionMenu = ({ show }) => {
 
-  const [activeAccordion, setActiveAccordion] = useState(null);
+  const [activeAccordion, setActiveAccordion] = useState(1);
 
   function handleClick(id) {
     setActiveAccordion(activeAccordion === id ? null : id); 

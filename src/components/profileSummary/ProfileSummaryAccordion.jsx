@@ -20,7 +20,7 @@ const ProfileSummaryAccordion = ({ activeAccordion, handleClick }) => {
   const label = "Highlight your professional experience, skills, and accomplishments in a brief, impactful statement."
 
   return (
-    <Accordion title='Profile Summary' isActive = {activeAccordion === 4} onShow={ () => handleClick(4) } >
+    <Accordion title='Profile Summary' isActive = {activeAccordion === 2} onShow={ () => handleClick(2) } >
       <div className="input-menu">
           <TextArea 
             label={label}

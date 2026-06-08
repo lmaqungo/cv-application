@@ -33,7 +33,7 @@ const MoreAccordion = ({ activeAccordion, handleClick }) => {
     }
 
     return (
-        <Accordion title='More' isActive = {activeAccordion === 7} onShow={ () => handleClick(7) } >
+        <Accordion title='More' isActive = {activeAccordion === 6} onShow={ () => handleClick(6) } >
             <div className="input-menu">
                 <div className="container">
                     {renderSections()}

@@ -33,7 +33,7 @@ const EducationAccordion = ({ activeAccordion, handleClick }) => {
   }
 
   return (
-    <Accordion title='Education' isActive = {activeAccordion === 2} onShow={ () => handleClick(2) } >
+    <Accordion title='Education' isActive = {activeAccordion === 4} onShow={ () => handleClick(4) } >
       <div className="input-menu" >
           <div className="container" >
             {renderEducation()}

@@ -17,7 +17,7 @@ const PersonalInformationAccordion = ({ activeAccordion, handleClick }) => {
     }   
 
     return (
-    <Accordion title = 'Personal Information' isActive = {activeAccordion === 3} onShow={ () => handleClick(3) } >
+    <Accordion title = 'Personal Information' isActive = {activeAccordion === 1} onShow={ () => handleClick(1) } >
         <div className="input-menu" >
           <div className="input-menu-layer-shared" >
             <InputField 

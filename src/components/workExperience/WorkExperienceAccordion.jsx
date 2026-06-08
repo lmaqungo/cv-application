@@ -33,7 +33,7 @@ const WorkExperienceAccordion = ({ activeAccordion, handleClick }) => {
   }
 
   return (
-    <Accordion title='Work Experience' isActive = {activeAccordion === 1} onShow={() => handleClick(1)} >
+    <Accordion title='Work Experience' isActive = {activeAccordion === 3} onShow={() => handleClick(3)} >
       <div className="input-menu" >
           <div className="container" >
             {renderJobs()}
