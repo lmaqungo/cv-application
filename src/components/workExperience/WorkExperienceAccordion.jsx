@@ -3,24 +3,13 @@ import Accordion from "../Accordion";
 import WorkExperience from "./WorkExperience";
 import AddItemButton from "../AddItemButton";
 import { InputValuesContext } from "../../context/InputValuesContext";
-import { v4 as uuid } from 'uuid'
+import { templateJob } from "../../templates";
 
 const WorkExperienceAccordion = ({ activeAccordion, handleClick }) => {
 
   const { jobs, setJobs } = useContext(InputValuesContext);
 
   const [activeInnerAccordion, setActiveInnerAccordion] = useState(null);
-
-  const templateJob = (position='', company='', startDate='', endDate='', description='') => {
-    return{
-      id: uuid(), 
-      position: position,
-      company: company,
-      startDate: startDate,
-      endDate: endDate,
-      description: description
-      }
-  }
 
   function handleInnerClick(id) {
     setActiveInnerAccordion(activeInnerAccordion === id ? null : id); 

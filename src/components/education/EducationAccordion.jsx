@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext, useState } from "react";
-import { v4 as uuid } from 'uuid'
+import { templateEducation } from '../../templates';
 import { InputValuesContext } from "../../context/InputValuesContext";
 import Accordion from '../Accordion';
 import Education from './Education';
@@ -11,17 +11,6 @@ const EducationAccordion = ({ activeAccordion, handleClick }) => {
   const { education, setEducation } = useContext(InputValuesContext)
 
   const [activeInnerAccordion, setActiveInnerAccordion] = useState(null);
-
-  const templateEducation = (school='', course='', startDate='', endDate='', description='') => {
-    return{
-      id: uuid(), 
-      school: school, 
-      course: course, 
-      startDate: startDate, 
-      endDate: endDate, 
-      description: description
-    }
-  };
 
   function handleInnerClick(id) {
     setActiveInnerAccordion(activeInnerAccordion === id ? null : id); 

@@ -7,7 +7,7 @@ import SkillsAccordion from './skills/SkillsAccordion';
 import MoreAccordion from './more/MoreAccordion';
 
 
-const AccordionMenu = ({  show }) => {
+const AccordionMenu = ({ show }) => {
 
   const [activeAccordion, setActiveAccordion] = useState(null);
 

@@ -2,7 +2,7 @@ import SectionName from './SectionName'
 import AddItemButton from '../AddItemButton';
 import SectionItemMenu from './SectionItemMenu';
 import LinkItemMenu from './LinkItemMenu';
-import { v4 as uuid } from 'uuid' ;
+import { templateSectionItem, templateLinkItem } from '../../templates';
 
 
 const Section = ({ section, setSections }) => {
@@ -18,21 +18,6 @@ const Section = ({ section, setSections }) => {
             )
         )
     }
-
-    const templateSectionItem = (content='') => {
-        return{
-            id: uuid(), 
-            content: content
-        }
-    };
-
-    const templateLinkItem = (href='', linkContent='') => {
-        return{
-            id: uuid(), 
-            href: href, 
-            linkContent: linkContent
-        }
-    };
 
     function addSectionItem(){
         setSections((prevSectionArray)=> {

@@ -1,9 +1,7 @@
-import {  useState } from "react";
+import {  useState, useRef } from "react";
 import { InputValuesContext } from "./InputValuesContext";
 
 export default function InputValuesProvider({children}){
-    const [jobs, setJobs] = useState([]); 
-    const [education, setEducation] = useState([]); 
     const [person, setPerson] = useState({
         firstName:'',
         lastName:'', 
@@ -15,15 +13,21 @@ export default function InputValuesProvider({children}){
         location:'', 
         profileSummary: ''
     })
+    const [jobs, setJobs] = useState([]); 
+    const [education, setEducation] = useState([]); 
     const [skills, setSkills] = useState([]);
     const [sections, setSections] = useState([]);
+    const [toggleEdit, setToggleEdit] = useState(true);
+    const contentRef = useRef(null);
 
     const contextObj = {
         jobs, setJobs, 
         education, setEducation, 
         person, setPerson, 
         skills, setSkills, 
-        sections, setSections
+        sections, setSections, 
+        toggleEdit, setToggleEdit, 
+        contentRef
     }
     
     return (

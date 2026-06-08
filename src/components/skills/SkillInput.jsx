@@ -22,7 +22,7 @@ const SkillInput = ({ setSkills, deleteSkill, skill }) => {
         <div className='no-label-input'>
             <input value={skill.content} name='content' className='text-label' type='text' onChange={handleTyping} />
         </div>
-        <DeleteIcon className='delete-btn' action={() => deleteSkill(skill.id)} />  
+        <DeleteIcon onClick={() => deleteSkill(skill.id)} />  
     </div>
   )
 }

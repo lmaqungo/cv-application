@@ -19,6 +19,9 @@
   align-items: center;
   padding: 10px;
   border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+
 }
 
 .inner-accordion-upper{
@@ -27,6 +30,8 @@
   align-items: center;
   padding: 4px;
   border-radius: 6px;
+  cursor: pointer;
+
 }
 
 .accordion-upper:hover{
@@ -43,7 +48,6 @@
   width: 100%;
   padding: 4px;
   border: 2px solid var(--primary-color);
-  /* box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); */
 }
 
 .inner-accordion{
@@ -157,10 +161,11 @@
 
 .delete-btn{
   cursor: pointer;
+  transition: fill 0.5s;
 }
 
 .delete-btn:hover{
-  transform: scale(1.2);
+  fill: red;
 }
 
 .input-list-item{
@@ -202,6 +207,7 @@ input, textarea{
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   border-radius: 6px;
   outline: 2px solid transparent;
+  cursor: pointer;
 }
 
 .toolbar{
@@ -210,7 +216,7 @@ input, textarea{
   align-self: flex-end;
   gap: 16px;
   position: fixed; 
-  right: 32px;
+  right: 12px;
   bottom: 48px;
 }
 
@@ -224,7 +230,7 @@ input, textarea{
   justify-content: space-between;
 }
 
-.show-button{
+.toggle-button{
   display: block
 }
 
@@ -243,6 +249,19 @@ input, textarea{
   }
 }
 
+@media (width < 72rem) {
+  .toolbar{
+    right: 0; 
+    left: 0;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 16px;
+    background-color: white;
+    border-top: #8C5A3C 1px solid;
+  }
+}
+
 @media (width >= 72rem){
 
   .input-menu-layer-shared{
@@ -254,13 +273,14 @@ input, textarea{
     width: 45%;
   }
 
-  .show-button{
+  .toggle-button{
     display: none
   }
 
   .hide{
     display: flex;
   }
+
 }
 
 

@@ -14,7 +14,7 @@ const Accordion = ({ children, title, onShow=null, isActive=null, type=null, del
             </h2>
             <div className="icons">
               <DropDownArrow className={isActive ? "flip-dropdown-down" : "flip-dropdown-up"}/>
-              <DeleteIcon className='delete-btn' action={deleteAction}/>
+              <DeleteIcon onClick={deleteAction}/>
             </div>
           </div>
           <div className={isActive ? 'children-show' : "children-hide"}>{children}</div>

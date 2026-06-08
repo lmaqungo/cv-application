@@ -3,43 +3,19 @@ import './App.css';
 import AccordionMenu from './components/AccordionMenu';
 import DummyPDF from './components/DummyPDF';
 import Accordion from './components/Accordion';
-import defaultPerson from './default';
 
-import { v4 as uuid } from 'uuid' ;
-import Tool from './components/Tool';
+import Toolbar from './components/tools/Toolbar';
+
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useReactToPrint } from 'react-to-print';
 
-
 import { InputValuesContext } from './context/InputValuesContext';
-
 
 function App() {
 
-
-  const {jobs, education, person, skills, sections} = useContext(InputValuesContext)
-  const { setPerson } = useContext(InputValuesContext)
-
-  const [toggleEdit, setToggleEdit] = useState(true);
+  const {jobs, education, person, skills, sections, toggleEdit, contentRef} = useContext(InputValuesContext)
  
-  const contentRef = useRef(null);
-  // above statement is need for react-to-print
-
-  function setDefaults(){
-    setPerson({
-      firstName: defaultPerson.firstName, 
-      lastName: defaultPerson.lastName, 
-      jobTitle: defaultPerson.jobTitle, 
-      phone: defaultPerson.phoneNumber, 
-      email: defaultPerson.emailAddress, 
-      github: defaultPerson.github,
-      website: defaultPerson.website, 
-      location: defaultPerson.location, 
-      profileSummary: defaultPerson.profileSummary
-    })
-  }
-
   function RenderSkills(){
     return(
       <div className='section'>
@@ -71,6 +47,26 @@ function App() {
         <p className='normal-text' >{edu.course}</p>
         <ul>
           {edu.description.split('\n').map(point=>{
+            return(
+              <li className='normal-text' >{point}</li>
+            )
+          }
+          )}
+        </ul>
+      </div>
+  )
+}
+
+  function RenderJob({ job }){
+    return(
+      <div className='section-gap'>
+        <div className="upper-content">
+          <p className='bold normal-text' >{job.company}</p>
+          <p className='normal-text' >{`${job.startDate}-${job.endDate}`}</p>
+        </div>
+        <p className='normal-text' >{job.position}</p>
+        <ul>
+          {job.description.split('\n').map(point=>{
             return(
               <li className='normal-text' >{point}</li>
             )
@@ -121,8 +117,7 @@ function App() {
   
   return ( 
     <>
-      
-      <AccordionMenu />
+      <AccordionMenu show={toggleEdit} />
       <DummyPDF ref={contentRef} show={!toggleEdit}>
         <div className="cv-header">
           <h1 className='fullName'>{`${person.firstName} ${person.lastName}`}</h1> 
@@ -171,12 +166,7 @@ function App() {
           </div>
         </div>
       </DummyPDF>
-      <div className="toolbar">
-        <Tool type={toggleEdit ? 'edit' : 'view' } show={true} buttonAction={() => setToggleEdit(!toggleEdit)} />
-        <Tool type='refresh' buttonAction={setDefaults}/>
-        <Tool type='print'/>
-      </div>
-
+      <Toolbar />
     </>
   )
 }

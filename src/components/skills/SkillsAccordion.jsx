@@ -1,21 +1,15 @@
 import Accordion from '../Accordion'
 import AddItemButton from '../AddItemButton'
 import { useContext } from 'react'
-import { v4 as uuid } from 'uuid'
 import { InputValuesContext } from '../../context/InputValuesContext'
 import { DeleteIcon } from '../../icons'
 import SkillInput from './SkillInput'
+import { templateSkill } from '../../templates'
 
 const SkillsAccordion = ({ activeAccordion, handleClick }) => {
 
     const { skills, setSkills } = useContext(InputValuesContext)
 
-    const templateSkill = (content='') => {
-        return{
-        id: uuid(),  
-        content: content
-        }
-    };
 
     function addSkill(){
         setSkills(prevSkills => [...prevSkills, templateSkill()])
