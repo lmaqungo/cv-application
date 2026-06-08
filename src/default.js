@@ -1,58 +1,65 @@
 
 
 const defaultPerson = {
-    firstName: 'John', 
-    lastName: 'Doe', 
-    jobTitle: 'Software Engineer', 
-    phoneNumber : '+27 34 345 0328', 
-    emailAddress : 'jd@gmail.com', 
-    github: 'https://github.com/jdoe', 
-    website: 'jdoe.com', 
-    location: 'Vancouver, Canada', 
-    profileSummary :'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie risus at mattis finibus. Donec efficitur in massa vitae egestas. Nulla facilisi. Mauris sollicitudin enim pellentesque neque fringilla molestie. Pellentesque luctus vestibulum facilisis. Fusce luctus, eros eu molestie vehicula, sem nisi sollicitudin sem, et venenatis lectus diam id odio. Maecenas maximus finibus quam, nec facilisis orci scelerisque ut. Nulla tellus metus, posuere in tincidunt ac, viverra nec felis.',
+    firstName: "Sipho",
+    lastName: "Dlamini",
+    jobTitle: "Software Engineer",
+    phoneNumber: "+27 82 345 6789",
+    emailAddress: "sipho.dlamini@gmail.com",
+    github: "github.com/siphod",
+    website: "siphod.dev",
+    location: "Johannesburg, Gauteng",
+    profileSummary :"Full-stack software engineer with a passion for building scalable, user-centred products. Experienced across the web stack with a strong foundation in computer science fundamentals. Thrives in collaborative environments and brings a systems-level perspective to every problem — from architecture decisions down to clean, maintainable code.",
     jobs: [
         {
-            position: 'junior software engineer',
-            company: 'Google LLC',
-            startDate: 'Jan 2025' ,
-            endDate: 'Dec 2028',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean molestie risus at mattis finibus.\nDonec efficitur in massa vitae egestas. Nulla facilisi. Mauris sollicitudin enim pellentesque neque fringilla molestie.\nPellentesque luctus vestibulum facilisis. Fusce luctus, eros eu molestie vehicula, sem nisi sollicitudin sem, et venenatis lectus diam id odio' 
+            position: "Software Engineer",
+            company: "Jumo World",
+            startDate: "Mar 2022",
+            endDate: "Present",
+            description: "Developed and maintained microservices powering loan origination for 1M+ users across Africa\nReduced API response times by 40% through query optimisation and caching strategies\nLed migration of legacy monolith modules to a distributed Node.js architecture\nCollaborated with product and design to ship a redesigned borrower dashboard"
+        }, 
+        {
+            position: "Junior Frontend Developer",
+            company: "Offerzen",
+            startDate: "Jan 2020",
+            endDate: "Feb 2022",
+            description: "Built and iterated on React components across the candidate-facing platform\nImproved Lighthouse performance scores from 61 to 89 across core pages\nIntroduced CSS Modules to the frontend codebase, eliminating style collision bugs"
         }
     ], 
     education: [
-        {
-            school: 'Stanford University' ,
-            course: 'Bachelors of Science in Computer Science', 
-            startDate: 'Feb 2018' , 
-            endDate: 'Nov 2021' , 
-            description: 'Aenean vulputate dolor id turpis aliquet faucibus. Sed vulputate tellus dui, tristique suscipit arcu gravida nec.\nCras sit amet metus eu sapien semper cursus. Donec finibus tincidunt pellentesque. Cras nec euismod ex.\n Mauris pretium, neque non elementum consequat, turpis ex sollicitudin est, eu pulvinar libero mi et dui. Mauris eleifend diam id mollis ornare.'
+         {
+            school: "University of Cape Town",
+            course: "BSc Computer Science",
+            startDate: "Feb 2016",
+            endDate: "Nov 2019",
+            description: "Graduated with distinction in Software Design and Algorithms\nFinal year project: a real-time collaborative code editor built on WebSockets\nTutor for first-year Introduction to Programming course"
         }
-
     ], 
     sections: [
         {
-            sectionName: 'Languages', 
-            sectionItems: ['isiXhosa', 'isiZulu'], 
-            linkItems: [{href: 'www.google.com', linkContent: 'Language profile'}]
+            sectionName: "Languages",
+            sectionItems: ["JavaScript, TypeScript, Python, Java, SQL"],
+            linkItems: []
         },
         {
-            sectionName: 'Interests', 
-            sectionItems: ['Money', 'Clothes'], 
+            sectionName: "Tools",
+            sectionItems: ["React, Node.js, PostgreSQL, Docker, Git, AWS, Figma"],
             linkItems: []
         },
         {
             sectionName: 'Certificates', 
             sectionItems: [],
-            linkItems: [{href: 'www.google.com', linkContent: 'Language profile'}, 
-                        {href: 'www.google.com', linkContent: 'Language profile'}
+            linkItems: [{href: "https://www.credly.com/badges/aws-certified-developer", linkContent: "AWS Certified     Developer— Associate (2023)" }, 
+                        {href: "https://coursera.org/verify/meta-frontend-2021", linkContent: "Meta Frontend Developer Certificate (2021)"}
             ]
+        }, 
+        {
+            sectionName: "Interests",
+            sectionItems: ["Open source contribution", "Compilers and language design", "Afrofuturism in tech", "Trail running"],
+            linkItems: []
         }
     ], 
-    skills : [
-        'Bag chaser', 
-        'Road runner', 
-        'Risk taker'
-    ]
+    skills : []
 }
 
 export default defaultPerson
