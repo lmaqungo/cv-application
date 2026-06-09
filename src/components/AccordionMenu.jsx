@@ -7,7 +7,7 @@ import SkillsAccordion from './skills/SkillsAccordion';
 import MoreAccordion from './more/MoreAccordion';
 
 
-const AccordionMenu = ({ show }) => {
+const AccordionMenu = () => {
 
   const [activeAccordion, setActiveAccordion] = useState(1);
 
@@ -16,7 +16,7 @@ const AccordionMenu = ({ show }) => {
   }
 
   return ( 
-    <div className={`accordion-container ${!show && 'hide' } `}>
+    <div className={`accordion-container`}>
       <PersonalInformationAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
       <ProfileSummaryAccordion activeAccordion={activeAccordion} handleClick={handleClick} />
       <WorkExperienceAccordion activeAccordion={activeAccordion} handleClick={handleClick} />

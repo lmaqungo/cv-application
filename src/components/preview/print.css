@@ -8,8 +8,7 @@
   flex-direction: column;
   gap: 1.7em;
   overflow-y: auto;
-  --primary-color: #FFF8F0;
-  --secondary-color: #8C5A3C;
+  background-color: white;
 }
 
 .cv-container {
@@ -58,7 +57,7 @@
 }
 
 .dotted-line{
-  border-top: 1px dashed black;
+  border-top: 1px dashed var(--secondary-color);
 }
 
 .fullName{
@@ -100,7 +99,7 @@
 }
 
 .normal-text{
-  font-size: 0.575em;
+  font-size: 0.545em;
 }
 
 

@@ -1,7 +1,8 @@
 
 :root {
-  --primary-color: #cccccc;
-  --secondary-color: #f2f2f2; 
+  --primary-color: #FFF8F0;
+  --secondary-color: #8C5A3C;
+  --tertiary-color: #f4e4db;
 }
 
 #root{
@@ -10,6 +11,16 @@
   display: flex;
   justify-content: space-around;
   position: relative;
+  background-color: #F9F8F6;
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 500px;
+  gap: 24px;
+  align-self: center;
 }
 
 
@@ -35,11 +46,11 @@
 }
 
 .accordion-upper:hover{
-  background-color: var(--primary-color);
+  background-color: var(--tertiary-color);
 }
 
 .accordion-upper-visited{
-  background-color:var(--primary-color);
+  background-color:var(--tertiary-color);
 }
 
 .accordion{
@@ -47,14 +58,18 @@
   border-radius: 6px;
   width: 100%;
   padding: 4px;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--secondary-color);
 }
 
 .inner-accordion{
   background-color: transparent;
   border-radius: 6px;
   padding: 4px;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--secondary-color);
+}
+
+.dropdown {
+  fill: var(--secondary-color)
 }
 
 .flip-dropdown-down{
@@ -98,8 +113,6 @@
   flex-direction: column;
   gap: 24px;
   position: relative;
-  width: 90%;
-  max-width: 500px;
 }
 
 .accordion-container * {
@@ -108,6 +121,10 @@
 
 .hide{
   display: none
+}
+
+.accordion-header{
+  color: var(--secondary-color)
 }
 
 
@@ -143,7 +160,7 @@
 
 .text-label:focus{
   border: none;
-  outline: none;
+  outline: 2px solid var(--secondary-color)
 }
 
 .add-item-button{
@@ -151,12 +168,12 @@
   border: none;
   background-color: transparent;
   font-weight: 700;
+  transition: color 0.2s;
 }
 
 .add-item-button:hover{
+  color: var(--secondary-color);
   cursor: pointer;
-  color: blue;
-
 }
 
 .delete-btn{
@@ -172,7 +189,7 @@
   background-color: transparent;
   border-radius: 6px;
   padding: 4px;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--secondary-color);
   display: flex;
   gap: 24px;
   align-items: flex-start;
@@ -183,7 +200,7 @@
 }
 
 input, textarea{
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
 }
 
 .section-buttons{
@@ -240,28 +257,24 @@ input, textarea{
   #root{
     padding: 12px;
   }
-
-  .accordion-container{
-    width: 95%;
-  }
-
-  #root{
-    min-height: auto;
-    height: 100vh;
-  }
+    
 }
+  
+  @media (width < 72rem) {
+    .toolbar{
+      right: 0; 
+      left: 0;
+      bottom: 0;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 16px;
+      background-color: white;
+      border-top: #8C5A3C 1px solid;
+    }
 
-@media (width < 72rem) {
-  .toolbar{
-    right: 0; 
-    left: 0;
-    bottom: 0;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 16px;
-    background-color: white;
-    border-top: #8C5A3C 1px solid;
-  }
+    #root{
+      padding-bottom: 6rem;
+    }
 }
 
 @media (width >= 72rem){

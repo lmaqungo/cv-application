@@ -9,11 +9,11 @@ const Accordion = ({ children, title, onShow=null, isActive=null, type=null, del
     return(
       <div className="inner-accordion" >
           <div className="inner-accordion-upper" onClick={onShow}>
-            <h2>
+            <h2 className='accordion-header' >
                 {title}
             </h2>
             <div className="icons">
-              <DropDownArrow className={isActive ? "flip-dropdown-down" : "flip-dropdown-up"}/>
+              <DropDownArrow className={`dropdown ${isActive ? "flip-dropdown-down" : "flip-dropdown-up"}`}/>
               <DeleteIcon onClick={deleteAction}/>
             </div>
           </div>
@@ -25,10 +25,10 @@ const Accordion = ({ children, title, onShow=null, isActive=null, type=null, del
     return (
       <div className="accordion">
           <div className={isActive ? "accordion-upper accordion-upper-visited" : "accordion-upper" } onClick={onShow}>
-            <h2>
+            <h2 className='accordion-header' >
                 {title}
             </h2>
-            <DropDownArrow className={isActive ? "flip-dropdown-down" : "flip-dropdown-up"}/>
+            <DropDownArrow className={`dropdown ${isActive ? "flip-dropdown-down" : "flip-dropdown-up"}`}/>
           </div>
           <div className={isActive ? 'children-show' : "children-hide"}>{children}</div>
       </div>

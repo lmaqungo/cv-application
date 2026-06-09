@@ -12,7 +12,11 @@ function App() {
   
   return ( 
     <>
-      <AccordionMenu show={toggleEdit} />
+      <div className={`main ${!toggleEdit && 'hide' }`}>
+        <h2>CV builder</h2>
+        <AccordionMenu show={toggleEdit} />
+        <p>Built by <a href="https://github.com/lmaqungo">Lu</a></p>
+      </div>
       <Preview show={!toggleEdit} />
       <Toolbar />
     </>
