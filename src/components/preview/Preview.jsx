@@ -11,7 +11,7 @@ const Preview = ({ show }) => {
       <div className='section'>
         <h1 className="header">Skills</h1>
         <div className="body">
-          <ul>
+          <ul className='brown' >
             {
               skills.map(
                 skill=>{
@@ -35,7 +35,7 @@ const Preview = ({ show }) => {
           <p className='normal-text' >{`${edu.startDate}-${edu.endDate}`}</p>
         </div>
         <p className='normal-text' >{edu.course}</p>
-        <ul>
+        <ul >
           {edu.description.split('\n').map(point=>{
             return(
               <li className='normal-text' >{point}</li>
