@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import './App.css';
 import AccordionMenu from './components/AccordionMenu';
 import Preview from './components/preview/Preview';
 import Toolbar from './components/tools/Toolbar';
