@@ -149,14 +149,11 @@
 }
 
 @media print{
-  @page {
-    size: 210mm 297mm;
-  }
-  
+    
   #page {
-    font-size: 20px;
-    height: 100vh;
-    overflow-y: clip;
+    height: 297mm;
+    font-size: 2cqh;
+    overflow-y: hidden;
   }
 
 }
